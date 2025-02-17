@@ -20,6 +20,14 @@
   @apply mt-10;
 }
 
+.message-field {
+  @apply font-bold text-white  bg-primary-green max-w-[295px] rounded-[18px] py-2 px-4;
+}
+
+.checkbox-input {
+  @apply w-4 h-4 rounded-full bg-primary-green;
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(240 10% 3.9%);

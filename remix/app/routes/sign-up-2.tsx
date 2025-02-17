@@ -1,17 +1,57 @@
 // Figma Frame: Onboarding Two
 
-import { Form, redirect, type ActionFunctionArgs } from "react-router";
+import {
+  Form,
+  redirect,
+  useNavigate,
+  type ActionFunctionArgs,
+} from "react-router";
+import { Button } from "~/components/ui/button";
+import { ChatBubbleAvatar } from "~/components/ui/chat-bubble";
+import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
+import { Input } from "~/components/ui/input";
+import { NavigationButtons } from "~/components/ui/navigation-buttons";
+import { ProgressDots } from "~/components/ui/progress-dots";
 import { setSession } from "~/lib/auth.server";
 import { login, signUp } from "~/queries/auth";
 
 export default function SignUp2() {
+  const navigate = useNavigate();
+
   return (
-    <Form method="post">
-      <input type="text" name="username" placeholder="Username" />
-      <input type="email" name="email" placeholder="Email" />
-      <input type="password" name="password" placeholder="Password" />
-      <button type="submit">Sign Up</button>
-    </Form>
+    <div className="section-wrapper max-w-[500px] mx-auto h-screen flex flex-col justify-between">
+      <div className="mt-20">
+        <h2 className="text-2xl text-center mb-10 font-bold">Sign Up</h2>
+        <ChatBubble variant="received" layout="default">
+          <ChatBubbleAvatar
+            src="/img/mascot-head.png"
+            fallback="M"
+            className="w-8 h-8"
+          />
+          <ChatBubbleMessage>
+            To get started, I'll need some basic information from you. Could you
+            please fill out the following details?
+          </ChatBubbleMessage>
+        </ChatBubble>
+      </div>
+      <Form className="w-full space-y-4 mt-4" method="post">
+        <Input type="text" name="username" placeholder="Username" />
+        <Input type="email" name="email" placeholder="Email" />
+        <Input type="password" name="password" placeholder="Password" />
+        <Button className="w-full" type="submit">
+          Sign Up
+        </Button>
+      </Form>
+      <div className="p-4 space-y-4">
+        <NavigationButtons
+          onNext={() => navigate("/onboarding/3")}
+          onPrevious={() => navigate("/onboarding/1")}
+          currentStep={2}
+          totalSteps={3}
+        />
+        <ProgressDots totalSteps={3} currentStep={2} />
+      </div>
+    </div>
   );
 }
 
