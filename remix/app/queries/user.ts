@@ -1,5 +1,4 @@
-import type { Session } from "~/types";
-import { type UserType } from "./../../../node/src/models/user";
+import type { Session, UserType } from "~/types";
 import { getSession, setSession } from "~/lib/auth.server";
 
 export async function getUser(request: Request): Promise<UserType | null> {
