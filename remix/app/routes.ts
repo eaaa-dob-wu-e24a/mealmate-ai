@@ -6,19 +6,11 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
-  layout("layouts/auth.tsx", [
-    index("routes/welcome.tsx"),
+  layout("layouts/navbar.tsx", [
+    index("routes/home.tsx"),
+    route("welcome", "routes/welcome.tsx"),
+    route("onboarding", "routes/onboarding.tsx"),
+    route("/chatbot", "routes/chatbot.tsx"),
     route("login", "routes/login.tsx"),
-    route("onboarding/1", "routes/sign-up-1.tsx"),
-    route("onboarding/2", "routes/sign-up-2.tsx"),
   ]),
-  layout("layouts/dashboard.tsx", [
-    route("dashboard", "routes/dashboard.tsx"),
-    route("sign-out", "routes/sign-out.ts"),
-  ]),
-
-  layout("layouts/onboarding.tsx", [
-    route("onboarding/3", "routes/sign-up-3.tsx"),
-  ]),
-
 ] satisfies RouteConfig;
