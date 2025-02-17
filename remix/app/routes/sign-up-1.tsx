@@ -19,7 +19,7 @@ export default function SignUp1() {
   };
 
   return (
-    <div className="onboarding-container h-screen flex flex-col justify-between">
+    <div className="onboarding-container section-wrapper h-screen flex flex-col justify-between">
       <h1 className="text-2xl pt-10 font-bold text-center">
         Welcome to mealmate!
       </h1>
@@ -55,9 +55,11 @@ export default function SignUp1() {
         </div>
       </div>
 
-      <div className="p-4 space-y-4">
+      <div className="p-4 space-y-4 flex flex-col items-center">
         <Link to="/onboarding/2">
-          <Button>Next</Button>
+          <Button className="min-w-[200px] " variant="default">
+            Next
+          </Button>
         </Link>
         <ProgressDots totalSteps={3} currentStep={1} />
       </div>
