@@ -51,6 +51,9 @@ export async function action({ request }: Route.ActionArgs) {
 
   const response = await fetch(`${process.env.API_URL}/api/users`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ email, name }),
   });
   const user = await response.json();
