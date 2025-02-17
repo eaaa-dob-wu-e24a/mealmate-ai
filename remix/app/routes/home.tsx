@@ -1,6 +1,5 @@
 import { Form, useLoaderData } from "react-router";
 import type { Route } from "./+types/home";
-import { User } from "~/models/user.model";
 import { json } from "stream/consumers";
 
 export function meta({}: Route.MetaArgs) {
@@ -11,7 +10,8 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader() {
-  const users = await User.find();
+  const response = await fetch(`${process.env.API_URL}/api/users`);
+  const users = await response.json();
   return Response.json({ users });
 }
 
@@ -49,6 +49,13 @@ export async function action({ request }: Route.ActionArgs) {
   const name = formData.get("name");
   console.log(email, name);
 
-  const user = await User.create({ email, name });
+  const response = await fetch(`${process.env.API_URL}/api/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, name }),
+  });
+  const user = await response.json();
   console.log(user);
 }
