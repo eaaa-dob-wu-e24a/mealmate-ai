@@ -10,7 +10,7 @@ import { Button } from "~/components/ui/button";
 import { ChatBubbleAvatar } from "~/components/ui/chat-bubble";
 import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
 import { Input } from "~/components/ui/input";
-import { NavigationButtons } from "~/components/ui/navigation-buttons";
+import { BackButton } from "~/components/ui/back-button";
 import { ProgressDots } from "~/components/ui/progress-dots";
 import { setSession } from "~/lib/auth.server";
 import { login, signUp } from "~/queries/auth";
@@ -43,12 +43,8 @@ export default function SignUp2() {
         </Button>
       </Form>
       <div className="p-4 space-y-4">
-        <NavigationButtons
-          onNext={() => navigate("/onboarding/3")}
-          onPrevious={() => navigate("/onboarding/1")}
-          currentStep={2}
-          totalSteps={3}
-        />
+        <BackButton onBack={() => navigate("/onboarding/1")} />
+
         <ProgressDots totalSteps={3} currentStep={2} />
       </div>
     </div>
@@ -70,6 +66,7 @@ export async function action({ request }: ActionFunctionArgs) {
   if (info?._id) {
     const newSession = await login(email as string, password as string);
     return await setSession(newSession);
+    return redirect("/onboarding/3");
   }
 
   return redirect("/onboarding/2?error=" + info?.error);

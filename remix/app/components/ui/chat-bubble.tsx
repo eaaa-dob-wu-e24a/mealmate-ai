@@ -17,6 +17,7 @@ const chatBubbleVariant = cva(
       layout: {
         default: "",
         ai: "max-w-full w-full items-center",
+        intro: "items-center h-full",
       },
     },
     defaultVariants: {

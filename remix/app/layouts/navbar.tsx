@@ -21,24 +21,26 @@ export default function BottomNav() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-[#F8F5EF] py-3 border-t border-gray-300">
+    <>
+      <nav className="fixed bottom-0 left-0 w-full bg-[#F8F5EF] py-3 border-t border-gray-300">
+        <ul className="flex justify-around items-center max-w-md mx-auto list-none p-0 m-0">
+          {navItems.map((item, index) => (
+            <li key={index}>
+              <NavLink
+                to={item.to}
+                className={({ isActive }) =>
+                  `flex items-center justify-center p-2 ${
+                    isActive ? "text-green-700" : "text-gray-600"
+                  }`
+                }
+              >
+                {item.icon}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <Outlet />
-      <ul className="flex justify-around items-center max-w-md mx-auto list-none p-0 m-0">
-        {navItems.map((item, index) => (
-          <li key={index}>
-            <NavLink
-              to={item.to}
-              className={({ isActive }) =>
-                `flex items-center justify-center p-2 ${
-                  isActive ? "text-green-700" : "text-gray-600"
-                }`
-              }
-            >
-              {item.icon}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    </>
   );
 }
