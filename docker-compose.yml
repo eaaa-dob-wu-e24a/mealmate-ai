@@ -46,6 +46,7 @@ services:
       - "3003:3000"
     environment:
       API_URL: http://node_ai:8000
+      AUTH_SECRET: ${AUTH_SECRET}
     networks:
       - ai_network
     depends_on:

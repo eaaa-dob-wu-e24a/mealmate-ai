@@ -1,86 +1,47 @@
 import { Request, Response } from "express";
-import { User } from "../models/index.js";
+import User from "../models/user.js";
+import mongoose from "mongoose";
 
-export async function getAllContacts(req: Request, res: Response) {
+export async function getUser(req: Request, res: Response) {
+  const auth = res.locals.auth;
+
   try {
-    const users = await User.find();
-    res.json(users);
+    const id = auth.user._id;
+
+    const user = await User.findById(id);
+    res.status(200).json(user);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch users" });
-  }
-}
-
-export async function getContactById(req: Request, res: Response) {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      res.status(404).json({ error: "User not found" });
-      return;
+    if (error instanceof mongoose.Error) {
+      res.status(400).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "Failed to get user" });
     }
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to fetch contact" });
   }
 }
 
-export async function createContact(req: Request, res: Response) {
-  try {
-    const { email, name } = req.body;
-    const user = await User.create({ email, name });
-    res.status(201).json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to create contact" });
-  }
-}
+export async function updateUser(req: Request, res: Response) {
+  const auth = res.locals.auth;
+  const id = auth.user._id;
 
-export async function updateContact(req: Request, res: Response) {
-  try {
-    const { email, name } = req.body;
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { email, name },
-      { new: true }
-    );
-    if (!user) {
-      res.status(404).json({ error: "User not found" });
-      return;
-    }
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to update user" });
-  }
-}
+  const { username, email, password, name, tags, onboarded } = req.body;
 
-export async function deleteContact(req: Request, res: Response) {
   try {
-    const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) {
-      res.status(404).json({ error: "User not found" });
-      return;
-    }
-    res.status(204).send();
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to delete contact" });
-  }
-}
-
-export async function searchContacts(req: Request, res: Response) {
-  const { q } = req.query;
-  try {
-    const users = await User.find({
-      $or: [
-        { email: { $regex: q as string, $options: "i" } },
-        { name: { $regex: q as string, $options: "i" } },
-      ],
+    await User.findByIdAndUpdate(id, {
+      username,
+      email,
+      password,
+      name,
+      tags,
+      onboarded,
     });
-    res.json(users);
+
+    const updatedUser = await User.findById(id);
+    res.status(200).json(updatedUser);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to search users" });
+    if (error instanceof mongoose.Error) {
+      res.status(400).json({ error: error.message });
+    } else {
+      res.status(500).json({ error: "Failed to update user" });
+    }
   }
 }
