@@ -37,11 +37,13 @@ export async function loginUser(req: Request, res: Response) {
       res.status(401).json({ error: "Invalid email or password" });
       return;
     }
-    const token = await Token.create({
+    await Token.create({
       user: user._id,
       token: user.password,
     });
-    res.status(200).json({ token });
+
+    const session = await Token.findOne({ user: user._id }).populate("user");
+    res.status(200).json({ user: session?.user, token: session?.token });
   } catch (error) {
     if (error instanceof mongoose.Error) {
       res.status(400).json({ error: error.message });
