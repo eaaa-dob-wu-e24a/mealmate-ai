@@ -45,7 +45,7 @@ services:
       context: ./remix
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3003:3000"
     environment:
       API_URL: http://node_ai:8000
     networks:
