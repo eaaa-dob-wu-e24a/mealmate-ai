@@ -20,4 +20,5 @@ export default [
   layout("layouts/onboarding.tsx", [
     route("onboarding/3", "routes/sign-up-3.tsx"),
   ]),
+
 ] satisfies RouteConfig;
