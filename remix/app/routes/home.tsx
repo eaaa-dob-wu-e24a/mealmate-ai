@@ -19,7 +19,7 @@ export default function Home() {
   const { users } = useLoaderData<typeof loader>();
   return (
     <div>
-      <h1>Home</h1>
+      <h1>Ali moussas klub</h1>
       <Form method="post" className="flex gap-2">
         <input
           className="border-2 border-gray-300 rounded-md p-2"
