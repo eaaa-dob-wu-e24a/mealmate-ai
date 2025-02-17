@@ -54,7 +54,7 @@ export default function Login() {
         </p>
 
         <div className="flex flex-col gap-4 absolute bottom-4 w-full  ">
-          <Link to="/onboarding" className="text-white text-lg group">
+          <Link to="/onboarding/1" className="text-white text-lg group">
             Not an user?{" "}
             <span className="font-bold group-hover:underline">Sign up</span>
           </Link>

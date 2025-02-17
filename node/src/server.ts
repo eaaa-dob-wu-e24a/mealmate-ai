@@ -1,6 +1,6 @@
 import cors from "cors";
 import express from "express";
-import { middleware } from "middleware.js";
+import { middleware } from "./middleware.js";
 import connectDB from "./database.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";

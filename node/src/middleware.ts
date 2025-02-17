@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Token from "models/tokens.js";
+import Token from "./models/tokens.js";
 
 const whitelist = ["/api/auth/login", "/api/auth/register"];
 
