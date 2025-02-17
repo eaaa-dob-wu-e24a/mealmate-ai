@@ -1,0 +1,45 @@
+services:
+  mongodb_ai:
+    image: mongo:latest
+    container_name: mongodb_ai
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_ai_data:/data/db
+    networks:
+      - ai_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  remix_ai:
+    build:
+      context: ./remix
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+    environment:
+      DB_HOST: mongodb_ai
+      DB_PORT: 27017
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    networks:
+      - ai_network
+    depends_on:
+      mongodb_ai:
+        condition: service_healthy
+
+volumes:
+  mongodb_ai_data:
+
+networks:
+  ai_network:
+    driver: bridge
