@@ -12,12 +12,9 @@ export default [
     route("onboarding/1", "routes/sign-up-1.tsx"),
     route("onboarding/2", "routes/sign-up-2.tsx"),
   ]),
-  layout("layouts/navbar.tsx", [
-    layout("layouts/dashboard.tsx", [
-      route("dashboard", "routes/dashboard.tsx"),
-      route("sign-out", "routes/sign-out.ts"),
-      route("chatbot", "routes/chatbot.tsx"),
-    ]),
+  layout("layouts/dashboard.tsx", [
+    route("dashboard", "routes/dashboard.tsx"),
+    route("sign-out", "routes/sign-out.ts"),
   ]),
 
   layout("layouts/onboarding.tsx", [

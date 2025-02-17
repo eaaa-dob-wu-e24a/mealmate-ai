@@ -1,11 +1,10 @@
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { Button } from "~/components/ui/button";
 import {
   ChatBubble,
   ChatBubbleAvatar,
   ChatBubbleMessage,
 } from "~/components/ui/chat-bubble";
-import { NavigationButtons } from "~/components/ui/navigation-buttons";
 import { ProgressDots } from "~/components/ui/progress-dots";
 
 export default function SignUp1() {
@@ -57,12 +56,9 @@ export default function SignUp1() {
       </div>
 
       <div className="p-4 space-y-4">
-        <NavigationButtons
-          onNext={nextStep}
-          onPrevious={previousStep}
-          currentStep={1}
-          totalSteps={3}
-        />
+        <Link to="/onboarding/2">
+          <Button>Next</Button>
+        </Link>
         <ProgressDots totalSteps={3} currentStep={1} />
       </div>
     </div>
