@@ -22,10 +22,16 @@ export default function Chatbot() {
   const [model, setModel] = useState<"openai" | "anthropic" | "mistral">(
     "openai"
   );
+  const [hasStartedChat, setHasStartedChat] = useState(false);
 
   const { session } = useLoaderData<{ session: Session | null }>();
 
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit: originalHandleSubmit,
+  } = useChat({
     api: import.meta.env.VITE_API_URL + `/api/chat`,
     headers: {
       Authorization: `Bearer ${session?.token}`,
@@ -35,6 +41,11 @@ export default function Chatbot() {
     },
   });
 
+  const handleSubmit = (e: React.FormEvent) => {
+    setHasStartedChat(true);
+    originalHandleSubmit(e);
+  };
+
   return (
     <section className="bg-[#F8F6F0] flex flex-col h-screen">
       <div className="flex items-center justify-between px-4 py-3">
@@ -42,33 +53,45 @@ export default function Chatbot() {
         <h1 className="text-green-900 font-bold text-lg mx-auto">Plant Mate</h1>
       </div>
 
-      <div className="flex flex-col items-center mt-4">
-        <img src="/plantmate.png" alt="Friendly Bison" className="w-50 h-50" />
-        <img
-          src="/mascot-full-body.png"
-          alt="Friendly Bison"
-          className="w-50 h-50"
-        />
-      </div>
+      {!hasStartedChat && (
+        <div className="flex flex-col items-center mt-4">
+          <img
+            src="/plantmate.png"
+            alt="Friendly Bison"
+            className="w-50 h-50"
+          />
+          <img
+            src="/mascot-full-body.png"
+            alt="Friendly Bison"
+            className="w-50 h-50"
+          />
+        </div>
+      )}
 
-      <div className="flex flex-col mt-auto px-4 pb-20">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         <div className="bg-gray-100 p-3 rounded-lg max-w-[80%] self-start">
           <p className="text-gray-800">
             Hej Mette! It is nice to see you back.
           </p>
         </div>
+
+        {messages.map((m) => (
+          <div
+            key={m.id}
+            className={`p-3 rounded-lg max-w-[80%] ${
+              m.role === "user"
+                ? "bg-green-600 text-white self-end ml-auto"
+                : "bg-gray-100 text-gray-800 self-start"
+            }`}
+          >
+            {m.content}
+          </div>
+        ))}
       </div>
 
-      {messages.map((m) => (
-        <div key={m.id} className="whitespace-pre-wrap">
-          {m.role === "user" ? "User: " : "AI: "}
-          {m.content}
-        </div>
-      ))}
-
-      <Form
+      <form
         onSubmit={handleSubmit}
-        className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-2 rounded-t-lg"
+        className="border-t border-gray-200 bg-[#F8F6F0] p-4 flex items-center gap-2"
       >
         <Select
           value={model}
@@ -101,7 +124,7 @@ export default function Chatbot() {
         >
           <FaMicrophone />
         </button>
-      </Form>
+      </form>
     </section>
   );
 }
