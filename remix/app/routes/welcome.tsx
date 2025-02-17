@@ -22,7 +22,7 @@ const WelcomePage = () => {
             Login
           </Link>
           <Link
-            to="/onboarding"
+            to="/onboarding/1"
             className={cn(buttonVariants({ variant: "default", size: "lg" }))}
           >
             Create Account

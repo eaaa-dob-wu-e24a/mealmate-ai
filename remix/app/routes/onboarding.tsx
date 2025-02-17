@@ -1,3 +1,5 @@
+// You should refactor this into the diffrent routes: SignUp1, SignUp2, SignUp3
+
 import React, { useState } from "react";
 import { Button } from "~/components/ui/button";
 
