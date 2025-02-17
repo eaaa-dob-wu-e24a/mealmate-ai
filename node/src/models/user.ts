@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
+  onboarded: {
+    type: Boolean,
+    default: false,
+  },
   tags: {
     type: [String],
     default: [],
