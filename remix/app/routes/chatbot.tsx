@@ -1,9 +1,40 @@
-import { Form, useLoaderData } from "react-router";
-import type { Route } from "./+types/chatbot";
-import { Input } from "~/components/ui/input";
+import { useChat } from "@ai-sdk/react";
+import { useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
+import { Form, useLoaderData, type LoaderFunctionArgs } from "react-router";
+import { Input } from "~/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { getSession } from "~/lib/auth.server";
+import type { Session } from "~/types";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const session = await getSession(request);
+  return Response.json({ session });
+}
 
 export default function Chatbot() {
+  const [model, setModel] = useState<"openai" | "anthropic" | "mistral">(
+    "openai"
+  );
+
+  const { session } = useLoaderData<{ session: Session | null }>();
+
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    api: import.meta.env.VITE_API_URL + `/api/chat`,
+    headers: {
+      Authorization: `Bearer ${session?.token}`,
+    },
+    body: {
+      model,
+    },
+  });
+
   return (
     <section className="bg-[#F8F6F0] flex flex-col h-screen">
       <div className="flex items-center justify-between px-4 py-3">
@@ -23,23 +54,51 @@ export default function Chatbot() {
       <div className="flex flex-col mt-auto px-4 pb-20">
         <div className="bg-gray-100 p-3 rounded-lg max-w-[80%] self-start">
           <p className="text-gray-800">
-            Hey, Mette! It is nice to see you back. Let's find something extra
-            yummy for you! 🌱
+            Hej Mette! It is nice to see you back.
           </p>
         </div>
       </div>
 
+      {messages.map((m) => (
+        <div key={m.id} className="whitespace-pre-wrap">
+          {m.role === "user" ? "User: " : "AI: "}
+          {m.content}
+        </div>
+      ))}
+
       <Form
-        method="post"
+        onSubmit={handleSubmit}
         className="absolute bottom-0 left-0 right-0 p-4 flex items-center gap-2 rounded-t-lg"
       >
+        <Select
+          value={model}
+          onValueChange={(value) =>
+            setModel(value as "openai" | "anthropic" | "mistral")
+          }
+        >
+          <SelectTrigger className="w-24">
+            <SelectValue placeholder="Select a model" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="openai">OpenAI</SelectItem>
+            <SelectItem value="anthropic">Anthropic</SelectItem>
+            <SelectItem value="mistral">Mistral</SelectItem>
+          </SelectContent>
+        </Select>
         <Input
+          value={input}
           type="text"
           name="message"
           placeholder="Message Friendly Bison"
           className="w-full p-3 rounded-lg outline-none bg-[#E6E2D8] text-green-900 placeholder:text-[#103B28]"
+          // disabled={isPending}
+          onChange={handleInputChange}
         />
-        <button type="submit" className="text-green-900 text-xl">
+        <button
+          type="submit"
+          className="text-green-900 text-xl"
+          // disabled={isPending}
+        >
           <FaMicrophone />
         </button>
       </Form>
