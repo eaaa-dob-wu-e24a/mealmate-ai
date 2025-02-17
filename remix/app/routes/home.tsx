@@ -20,10 +20,22 @@ export default function Home() {
   return (
     <div>
       <h1>Home</h1>
-      <Form method="post">
-        <input type="text" name="email" />
-        <input type="text" name="name" />
-        <button type="submit">Submit</button>
+      <Form method="post" className="flex gap-2">
+        <input
+          className="border-2 border-gray-300 rounded-md p-2"
+          placeholder="Email"
+          type="text"
+          name="email"
+        />
+        <input
+          className="border-2 border-gray-300 rounded-md p-2"
+          placeholder="Name"
+          type="text"
+          name="name"
+        />
+        <button className="bg-blue-500 text-white p-2 rounded-md" type="submit">
+          Submit
+        </button>
       </Form>
 
       <pre>{JSON.stringify(users, null, 2)}</pre>
