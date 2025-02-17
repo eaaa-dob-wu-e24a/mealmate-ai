@@ -4,7 +4,7 @@ import { cn } from "~/lib/utils";
 import { Input } from "~/components/ui/input";
 export default function Login() {
   return (
-    <div className="relative bg-cover h-screen flex flex-col  items-center justify-center bg-center bg-no-repeat bg-[url('/img/loginhero.jpg')]">
+    <div className="relative bg-cover h-screen flex flex-col section-wrapper  items-center justify-center bg-center bg-no-repeat bg-[url('/img/loginhero.jpg')]">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
@@ -15,6 +15,12 @@ export default function Login() {
           Enter your details below to login to your account
         </p>
         <div className="flex flex-col gap-4 absolute bottom-4 w-full  ">
+          <Link to="/onboarding" className="text-white text-lg">
+            Not an user?{" "}
+            <span className="font-bold">
+              <Link to="/onboarding">Sign up</Link>
+            </span>
+          </Link>
           <Input type="email" placeholder="Email" />
           <Input type="password" placeholder="Password" />
           <Link

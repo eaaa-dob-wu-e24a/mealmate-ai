@@ -10,8 +10,14 @@
 
   --color-primary-green: #103b28;
   --color-cream: #f7f4ed;
+}
 
-  --section-wrapper: 0 40px;
+.section-wrapper {
+  @apply py-0 px-6;
+}
+
+.section-distance {
+  @apply mt-10;
 }
 
 :root {

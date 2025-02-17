@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 
 const WelcomePage = () => {
   return (
-    <div className="relative bg-cover h-screen flex flex-col  items-center justify-center bg-center bg-no-repeat bg-[url('/img/welcomehero.jpg')]">
+    <div className="relative bg-cover section-wrapper h-screen flex flex-col  items-center justify-center bg-center bg-no-repeat bg-[url('/img/welcomehero.jpg')]">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
