@@ -6,26 +6,23 @@ import MessageLoading from "./message-loading";
 import { Button, type ButtonProps } from "~/components/ui/button";
 
 // ChatBubble
-const chatBubbleVariant = cva(
-  "flex gap-2 max-w-[60%] items-end relative group",
-  {
-    variants: {
-      variant: {
-        received: "self-start",
-        sent: "self-end flex-row-reverse",
-      },
-      layout: {
-        default: "",
-        ai: "max-w-full w-full items-center",
-        intro: "items-center h-full",
-      },
+const chatBubbleVariant = cva("flex gap-2 items-end relative group", {
+  variants: {
+    variant: {
+      received: "self-start",
+      sent: "self-end flex-row-reverse",
     },
-    defaultVariants: {
-      variant: "received",
-      layout: "default",
+    layout: {
+      default: "",
+      ai: "max-w-full w-full items-center",
+      intro: "items-center h-full",
     },
-  }
-);
+  },
+  defaultVariants: {
+    variant: "received",
+    layout: "default",
+  },
+});
 
 interface ChatBubbleProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -76,9 +73,8 @@ const ChatBubbleAvatar: React.FC<ChatBubbleAvatarProps> = ({
 const chatBubbleMessageVariants = cva("p-4", {
   variants: {
     variant: {
-      received:
-        "bg-secondary text-secondary-foreground rounded-r-lg rounded-tl-lg",
-      sent: "bg-primary text-primary-foreground rounded-l-lg rounded-tr-lg",
+      received: "bg-green-900 text-white rounded-r-lg rounded-tl-lg",
+      sent: "bg-white text-black rounded-l-lg rounded-tr-lg",
     },
     layout: {
       default: "",

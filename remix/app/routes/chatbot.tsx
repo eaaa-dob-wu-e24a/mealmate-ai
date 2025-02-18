@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
 import { getSession } from "~/lib/auth.server";
 import type { Session } from "~/types";
 
@@ -52,15 +53,19 @@ export default function Chatbot() {
     <section className="bg-[#F8F6F0] flex flex-col min-h-screen relative">
       <div className="flex items-center justify-between px-4 py-3">
         <button className="text-green-900 text-2xl">&times;</button>
-        <h1 className="text-green-900 font-bold text-lg mx-auto">Plant Mate</h1>
+        <img
+          src="/img/mealmatelogo-font.png"
+          alt="Meal Mate Logo"
+          className="w-28"
+        />
       </div>
 
       {!hasStartedChat && (
         <div className="flex flex-col items-center mt-4">
           <img
-            src="/plantmate.png"
+            src="/img/mealmatelogo-font.png"
             alt="Friendly Bison"
-            className="w-50 h-50"
+            className="w-40 h-40 object-contain"
           />
           <img
             src="/mascot-full-body.png"
@@ -71,23 +76,21 @@ export default function Chatbot() {
       )}
 
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-        <div className="bg-gray-100 p-3 rounded-lg max-w-[80%] self-start">
-          <p className="text-gray-800">
-            Hej Mette! It is nice to see you back.
-          </p>
-        </div>
+        <ChatBubble variant="received">
+          <ChatBubbleMessage>
+            <Markdown>Hej Mette! It is nice to see you back.</Markdown>
+          </ChatBubbleMessage>
+        </ChatBubble>
 
         {messages.map((m) => (
-          <div
+          <ChatBubble
             key={m.id}
-            className={`p-3 rounded-lg max-w-[80%] ${
-              m.role === "user"
-                ? "bg-green-600 text-white self-end ml-auto"
-                : "bg-gray-100 text-gray-800 self-start"
-            }`}
+            variant={m.role === "user" ? "sent" : "received"}
           >
-            <Markdown>{m.content}</Markdown>
-          </div>
+            <ChatBubbleMessage>
+              <Markdown>{m.content}</Markdown>
+            </ChatBubbleMessage>
+          </ChatBubble>
         ))}
       </div>
 
