@@ -15,7 +15,7 @@ const chatBubbleVariant = cva("flex gap-2 items-end relative group", {
     layout: {
       default: "",
       ai: "max-w-full w-full items-center",
-      intro: "items-center h-full",
+      intro: "items-center h-full self-center",
     },
   },
   defaultVariants: {
@@ -79,6 +79,7 @@ const chatBubbleMessageVariants = cva("p-4", {
     layout: {
       default: "",
       ai: "border-t w-full rounded-none bg-transparent",
+      intro: "w-full rounded-lg bg-gray-100",
     },
   },
   defaultVariants: {
