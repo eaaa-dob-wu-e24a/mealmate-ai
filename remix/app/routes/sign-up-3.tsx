@@ -36,7 +36,7 @@ export default function SignUp3() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-between h-screen section-wrapper">
+    <div className="flex flex-col items-center justify-between min-h-[calc(100svh-66px)] section-wrapper">
       <div className="flex flex-col items-center gap-4 justify-center">
         <div className="flex items-center gap-4 justify-center">
           <img

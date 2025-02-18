@@ -19,7 +19,7 @@ export default function SignUp2() {
   const navigate = useNavigate();
 
   return (
-    <div className="section-wrapper max-w-[500px] mx-auto h-screen flex flex-col justify-between">
+    <div className="section-wrapper max-w-[500px] mx-auto min-h-[calc(100svh-66px)] flex flex-col justify-between">
       <div className="mt-20">
         <h2 className="text-2xl text-center mb-10 font-bold">Sign Up</h2>
         <ChatBubble variant="received" layout="default">

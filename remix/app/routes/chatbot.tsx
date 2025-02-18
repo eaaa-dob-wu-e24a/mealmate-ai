@@ -1,9 +1,15 @@
 import { useChat } from "@ai-sdk/react";
+import { Send } from "lucide-react";
 import { Fragment, useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { useLoaderData, type LoaderFunctionArgs } from "react-router";
 import { Markdown } from "~/components/markdown";
-import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
+import {
+  ChatBubble,
+  ChatBubbleAvatar,
+  ChatBubbleMessage,
+} from "~/components/ui/chat-bubble";
 import {
   Select,
   SelectContent,
@@ -11,14 +17,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import {
-  ChatBubble,
-  ChatBubbleAvatar,
-  ChatBubbleMessage,
-} from "~/components/ui/chat-bubble";
+import { Textarea } from "~/components/ui/textarea";
+import { useScrollToBottom } from "~/hooks/use-scroll-to-bottom";
 import { getSession } from "~/lib/auth.server";
 import type { Session } from "~/types";
-import { Textarea } from "~/components/ui/textarea";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request);
@@ -63,17 +65,11 @@ export default function Chatbot() {
     originalHandleSubmit(e);
   };
 
-  return (
-    <section className="bg-[#F8F6F0] flex flex-col min-h-screen relative">
-      <div className="flex items-center justify-between px-4 py-3">
-        <button className="text-green-900 text-2xl">&times;</button>
-        <img
-          src="/img/mealmatelogo-font.png"
-          alt="Meal Mate Logo"
-          className="w-28"
-        />
-      </div>
+  const [messagesContainerRef, messagesEndRef] =
+    useScrollToBottom<HTMLDivElement>();
 
+  return (
+    <section className="bg-[#F8F6F0] flex flex-col relative min-h-[calc(100svh-136px)]">
       {!hasStartedChat && (
         <div className="flex flex-col items-center mt-4">
           <img
@@ -89,7 +85,20 @@ export default function Chatbot() {
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+      <div
+        ref={messagesContainerRef}
+        className="max-h-[calc(100svh-300px)] flex-1 overflow-y-auto px-4 py-4 space-y-4"
+      >
+        {hasStartedChat && (
+          <div className="flex items-center justify-between px-4 py-3">
+            <img
+              src="/img/mealmatelogo-font.png"
+              alt="Meal Mate Logo"
+              className="w-28"
+            />
+          </div>
+        )}
+
         {messages.map((m) => {
           console.log(m);
           const toolCall = m?.toolInvocations?.[0];
@@ -111,42 +120,56 @@ export default function Chatbot() {
             </Fragment>
           );
         })}
+
+        <div
+          ref={messagesEndRef}
+          className="shrink-0 min-w-[24px] min-h-[24px]"
+        />
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="border-t border-gray-200 bg-[#F8F6F0] p-4 flex items-center gap-2 mb-18"
+        className="border-t border-gray-200 bg-[#F8F6F0] p-4 flex flex-col gap-2 sticky bottom-0"
       >
-        <Select
-          value={model}
-          onValueChange={(value) =>
-            setModel(value as "openai" | "anthropic" | "mistral")
-          }
-        >
-          <SelectTrigger className="w-24">
-            <SelectValue placeholder="Select a model" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="openai">OpenAI</SelectItem>
-            <SelectItem value="anthropic">Anthropic</SelectItem>
-            <SelectItem value="mistral">Mistral</SelectItem>
-          </SelectContent>
-        </Select>
         <Textarea
           value={input}
           name="message"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSubmit(e);
+            }
+          }}
           placeholder="Message Friendly Bison"
-          className="w-full p-3 rounded-lg outline-none bg-[#E6E2D8] text-green-900 placeholder:text-[#103B28]"
+          className="w-full min-h-[80px] resize-none p-3 rounded-lg outline-none bg-[#E6E2D8] text-green-900 placeholder:text-[#103B28]"
           // disabled={isPending}
           onChange={handleInputChange}
         />
-        <button
-          type="button"
-          className="text-green-900 text-xl"
-          // disabled={isPending}
-        >
-          <FaMicrophone />
-        </button>
+        <div className="flex items-center gap-2 justify-between">
+          <Select
+            value={model}
+            onValueChange={(value) =>
+              setModel(value as "openai" | "anthropic" | "mistral")
+            }
+          >
+            <SelectTrigger className="w-[160px] border-none shadow-none">
+              <SelectValue placeholder="Model" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="openai">ChatGPT-4o-mini</SelectItem>
+              <SelectItem value="anthropic">Claude 3.5 Haiku</SelectItem>
+              <SelectItem value="mistral">Mistral-small-latest</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            type="submit"
+            size="icon"
+            variant="ghost"
+            className="min-w-9"
+            // disabled={isPending}
+          >
+            <Send className="w-4 h-4" />
+          </Button>
+        </div>
       </form>
     </section>
   );

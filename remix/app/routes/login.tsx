@@ -42,18 +42,18 @@ export default function Login() {
   const { error } = useLoaderData<typeof loader>();
 
   return (
-    <div className="relative bg-cover h-screen flex flex-col section-wrapper  items-center justify-center bg-center bg-no-repeat bg-[url('/img/loginhero.jpg')]">
+    <div className="relative bg-cover min-h-[calc(100svh-66px)] flex flex-col section-wrapper  items-center justify-center bg-center bg-no-repeat bg-[url('/img/loginhero.jpg')]">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       {/* Content */}
-      <div className="relative z-10 text-center flex flex-col justify-center gap-4 h-full">
+      <div className="z-10 text-center flex flex-col justify-center gap-4 h-full">
         <h1 className="text-white text-4xl font-bold">Login to your account</h1>
         <p className="text-white text-2xl">
           Enter your details below to login to your account
         </p>
 
-        <div className="flex flex-col gap-4 absolute bottom-4 w-full  ">
+        <div className="flex flex-col gap-4 absolute bottom-4 left-4 right-4">
           <Link to="/onboarding/1" className="text-white text-lg group">
             Not an user?{" "}
             <span className="font-bold group-hover:underline">Sign up</span>
@@ -66,7 +66,12 @@ export default function Login() {
             })}
           >
             <div>
-              <Input type="email" placeholder="Email" {...register("email")} />
+              <Input
+                className="bg-white"
+                type="email"
+                placeholder="Email"
+                {...register("email")}
+              />
               {errors.email && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.email.message}
@@ -75,6 +80,7 @@ export default function Login() {
             </div>
             <div>
               <Input
+                className="bg-white"
                 type="password"
                 placeholder="Password"
                 {...register("password")}
