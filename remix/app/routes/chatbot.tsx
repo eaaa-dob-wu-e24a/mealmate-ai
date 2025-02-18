@@ -1,5 +1,5 @@
 import { useChat } from "@ai-sdk/react";
-import { Send } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
 import { Fragment, useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { useLoaderData, type LoaderFunctionArgs } from "react-router";
@@ -29,6 +29,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function Chatbot() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [model, setModel] = useState<"openai" | "anthropic" | "mistral">(
     "openai"
   );
@@ -50,8 +51,14 @@ export default function Chatbot() {
       model,
     },
     maxSteps: 10,
-    onFinish: (usage, finishReason) => {
-      console.log(usage, finishReason);
+    onError: (error) => {
+      setError(error.message);
+    },
+    onFinish: (usage, finish) => {
+      if (finish.finishReason === "error") {
+        setError("Sorry, I couldn't process that request. Please try again.");
+      }
+
       setLoading(false);
     },
     onToolCall({ toolCall }) {
@@ -60,6 +67,7 @@ export default function Chatbot() {
   });
 
   const handleSubmit = (e: React.FormEvent) => {
+    setError(null);
     setHasStartedChat(true);
     setLoading(true);
     originalHandleSubmit(e);
@@ -99,8 +107,7 @@ export default function Chatbot() {
           </div>
         )}
 
-        {messages.map((m) => {
-          console.log(m);
+        {messages.map((m, i) => {
           const toolCall = m?.toolInvocations?.[0];
           return (
             <Fragment key={m.id}>
@@ -110,7 +117,14 @@ export default function Chatbot() {
                 </p>
               )}
               <ChatBubble variant={m.role === "user" ? "sent" : "received"}>
-                {m.role === "assistant" && (
+                {i === messages.length - 1 &&
+                  loading &&
+                  m.role === "assistant" && (
+                    <div className="h-10 w-10 flex items-center justify-center">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    </div>
+                  )}
+                {!loading && m.role === "assistant" && (
                   <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                 )}
                 <ChatBubbleMessage>
@@ -120,6 +134,12 @@ export default function Chatbot() {
             </Fragment>
           );
         })}
+
+        {error && (
+          <div className="text-center text-red-500">
+            <p>{error}</p>
+          </div>
+        )}
 
         <div
           ref={messagesEndRef}
