@@ -20,6 +20,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Chatbot() {
+  const [loading, setLoading] = useState(false);
   const [model, setModel] = useState<"openai" | "anthropic" | "mistral">(
     "openai"
   );
@@ -41,10 +42,15 @@ export default function Chatbot() {
       model,
     },
     maxSteps: 10,
+    onFinish: (args) => {
+      console.log(args);
+      setLoading(false);
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     setHasStartedChat(true);
+    setLoading(true);
     originalHandleSubmit(e);
   };
 
@@ -77,18 +83,25 @@ export default function Chatbot() {
           </p>
         </div>
 
-        {messages.map((m) => (
-          <div
-            key={m.id}
-            className={`p-3 rounded-lg max-w-[80%] ${
-              m.role === "user"
-                ? "bg-green-600 text-white self-end ml-auto"
-                : "bg-gray-100 text-gray-800 self-start"
-            }`}
-          >
-            <Markdown>{m.content}</Markdown>
+        {messages.map((m) => {
+          return (
+            <div
+              key={m.id}
+              className={`p-3 rounded-lg max-w-[80%] ${
+                m.role === "user"
+                  ? "bg-green-600 text-white self-end ml-auto"
+                  : "bg-gray-100 text-gray-800 self-start"
+              }`}
+            >
+              <Markdown>{m.content}</Markdown>
+            </div>
+          );
+        })}
+        {loading && (
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-900"></div>
           </div>
-        ))}
+        )}
       </div>
 
       <form
