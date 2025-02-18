@@ -1,6 +1,8 @@
 import { useLoaderData } from "react-router";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { getSession } from "~/lib/auth.server";
+import type { Route } from "./+types/recipe-single";
 
 type Recipe = {
   title: string;
@@ -18,25 +20,36 @@ type Recipe = {
       unit: string;
     };
   }[];
+  instructions: string[];
   servings: number;
 };
 
-export async function loader() {
-  const { recipes } = await import("../data");
-  return { recipes };
+export async function loader({ request, params }: Route.LoaderArgs) {
+  const session = await getSession(request);
+
+  const resposne = await fetch(
+    `${process.env.API_URL}/api/recipes/${params.id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${session?.token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const recipe = await resposne.json();
+  return { recipe };
 }
 
 export default function RecipeArchive() {
-  const { recipes } = useLoaderData<typeof loader>();
-  const recipe = recipes[0];
-  const [servings, setServings] = useState(recipe.servings);
+  const { recipe }: { recipe: Recipe } = useLoaderData<typeof loader>();
+  const [servings, setServings] = useState<number>(recipe.servings);
 
   const adjustQuantity = (change: number) => {
     setServings((prev) => Math.max(1, prev + change));
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 bg-white">
+    <div className="max-w-lg mx-auto p-4 bg-white min-h-[calc(100svh-136px)] overflow-auto">
       <img
         src={recipe.image}
         alt={recipe.title}
@@ -99,7 +112,13 @@ export default function RecipeArchive() {
         </TabsContent>
         <TabsContent value="instructions">
           <h2 className="text-xl font-semibold mt-4">Instructions</h2>
-          <p>{recipe.instructions}</p>
+          <ul>
+            {recipe.instructions.map((step, index) => (
+              <li key={index} className="mt-2">
+                {step}
+              </li>
+            ))}
+          </ul>
         </TabsContent>
       </Tabs>
     </div>
