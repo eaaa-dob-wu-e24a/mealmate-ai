@@ -13,7 +13,7 @@ export default function BottomNav() {
     { icon: <FiHome size={24} />, to: "/" },
     {
       icon: <IoChatbubbleEllipsesOutline size={28} />,
-      to: "/users",
+      to: "/chatbot",
     },
     { icon: <FaRegBookmark size={24} />, to: "/recipe-archive" },
     { icon: <FaRegCircleUser size={24} />, to: "/profile" },
