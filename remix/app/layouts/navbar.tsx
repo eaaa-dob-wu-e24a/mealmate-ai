@@ -1,7 +1,7 @@
 import type { Route } from "./+types/navbar";
 import { NavLink, Outlet } from "react-router";
 
-import { IoCalendarClearOutline } from "react-icons/io5";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { FiHome } from "react-icons/fi";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { HiOutlineUsers } from "react-icons/hi2";
@@ -11,12 +11,11 @@ import { FaRegBookmark } from "react-icons/fa";
 export default function BottomNav() {
   const navItems = [
     { icon: <FiHome size={24} />, to: "/" },
-    { icon: <IoCalendarClearOutline size={24} />, to: "/calendar" },
     {
-      icon: <HiOutlineUsers size={28} className="text-green-700" />,
+      icon: <IoChatbubbleEllipsesOutline size={28} />,
       to: "/users",
     },
-    { icon: <FaRegBookmark size={24} />, to: "/bookmarks" },
+    { icon: <FaRegBookmark size={24} />, to: "/recipe-archive" },
     { icon: <FaRegCircleUser size={24} />, to: "/profile" },
   ];
 
