@@ -19,10 +19,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export default function DashboardLayout() {
   return (
     <div>
-      <h1>Dashboard</h1>
+      {/* <h1>Dashboard</h1>
       <form action="/sign-out" method="post">
         <button type="submit">Sign out</button>
-      </form>
+      </form> */}
       <Outlet />
     </div>
   );
