@@ -17,6 +17,7 @@ export default [
       route("dashboard", "routes/dashboard.tsx"),
       route("sign-out", "routes/sign-out.ts"),
       route("chatbot", "routes/chatbot.tsx"),
+      route("recipe-archive", "routes/recipe-archive.tsx"),
       route("recipe-single", "routes/recipe-single.tsx"),
     ]),
   ]),
