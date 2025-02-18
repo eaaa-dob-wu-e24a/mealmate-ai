@@ -22,7 +22,7 @@ export default function BottomNav() {
 
   return (
     <>
-      <nav className="fixed bottom-0 left-0 w-full bg-[#F8F5EF] py-3 border-t border-gray-300">
+      <nav className="fixed z-30 bottom-0 left-0 w-full bg-[#F8F5EF] py-3 border-t border-gray-300">
         <ul className="flex justify-around items-center max-w-md mx-auto list-none p-0 m-0">
           {navItems.map((item, index) => (
             <li key={index}>

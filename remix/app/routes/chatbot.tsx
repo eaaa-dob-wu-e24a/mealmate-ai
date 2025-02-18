@@ -1,7 +1,8 @@
 import { useChat } from "@ai-sdk/react";
 import { useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
-import { Form, useLoaderData, type LoaderFunctionArgs } from "react-router";
+import { useLoaderData, type LoaderFunctionArgs } from "react-router";
+import { Markdown } from "~/components/markdown";
 import { Input } from "~/components/ui/input";
 import {
   Select,
@@ -39,6 +40,7 @@ export default function Chatbot() {
     body: {
       model,
     },
+    maxSteps: 10,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -47,7 +49,7 @@ export default function Chatbot() {
   };
 
   return (
-    <section className="bg-[#F8F6F0] flex flex-col h-screen">
+    <section className="bg-[#F8F6F0] flex flex-col min-h-screen relative">
       <div className="flex items-center justify-between px-4 py-3">
         <button className="text-green-900 text-2xl">&times;</button>
         <h1 className="text-green-900 font-bold text-lg mx-auto">Plant Mate</h1>
@@ -84,14 +86,14 @@ export default function Chatbot() {
                 : "bg-gray-100 text-gray-800 self-start"
             }`}
           >
-            {m.content}
+            <Markdown>{m.content}</Markdown>
           </div>
         ))}
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="border-t border-gray-200 bg-[#F8F6F0] p-4 flex items-center gap-2"
+        className="border-t border-gray-200 bg-[#F8F6F0] p-4 flex items-center gap-2 mb-18"
       >
         <Select
           value={model}
