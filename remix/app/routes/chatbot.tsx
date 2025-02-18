@@ -1,5 +1,5 @@
 import { useChat } from "@ai-sdk/react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { useLoaderData, type LoaderFunctionArgs } from "react-router";
 import { Markdown } from "~/components/markdown";
@@ -43,9 +43,12 @@ export default function Chatbot() {
       model,
     },
     maxSteps: 10,
-    onFinish: (args) => {
-      console.log(args);
+    onFinish: (usage, finishReason) => {
+      console.log(usage, finishReason);
       setLoading(false);
+    },
+    onToolCall({ toolCall }) {
+      console.log(toolCall);
     },
   });
 
@@ -89,15 +92,20 @@ export default function Chatbot() {
         </ChatBubble>
 
         {messages.map((m) => {
+          const toolCall = m?.toolInvocations?.[0];
           return (
-            <ChatBubble
-              key={m.id}
-              variant={m.role === "user" ? "sent" : "received"}
-            >
-              <ChatBubbleMessage>
-                <Markdown>{m.content}</Markdown>
-              </ChatBubbleMessage>
-            </ChatBubble>
+            <Fragment key={m.id}>
+              {toolCall && (
+                <p className="text-sm text-gray-500 flex items-center gap-2">
+                  Calling: {toolCall.toolName}
+                </p>
+              )}
+              <ChatBubble variant={m.role === "user" ? "sent" : "received"}>
+                <ChatBubbleMessage>
+                  <Markdown>{m.content}</Markdown>
+                </ChatBubbleMessage>
+              </ChatBubble>
+            </Fragment>
           );
         })}
       </div>
