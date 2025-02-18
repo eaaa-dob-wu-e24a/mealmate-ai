@@ -1,5 +1,5 @@
 import type { LoaderFunctionArgs } from "react-router";
-import { Link, Outlet, redirect } from "react-router";
+import { Outlet, redirect } from "react-router";
 import { getSession } from "~/lib/auth.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -18,12 +18,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export default function DashboardLayout() {
   return (
-    <div>
-      {/* <h1>Dashboard</h1>
-      <form action="/sign-out" method="post">
-        <button type="submit">Sign out</button>
-      </form> */}
+    <>
       <Outlet />
-    </div>
+    </>
   );
 }
