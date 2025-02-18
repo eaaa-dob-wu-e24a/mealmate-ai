@@ -32,7 +32,7 @@ export default function SignUp1() {
         />
 
         <div className="flex flex-col gap-4 w-full mx-auto items-center justify-center">
-          <ChatBubble variant="received" layout="ai">
+          <ChatBubble variant="received" layout="intro">
             <ChatBubbleAvatar
               src="/img/mascot-head.png"
               fallback="M"
@@ -42,7 +42,7 @@ export default function SignUp1() {
               Hi there! 👋 We're excited to have you on board!
             </ChatBubbleMessage>
           </ChatBubble>
-          <ChatBubble variant="received" layout="ai">
+          <ChatBubble variant="received" layout="default">
             <ChatBubbleAvatar
               src="/img/mascot-head.png"
               fallback="M"
