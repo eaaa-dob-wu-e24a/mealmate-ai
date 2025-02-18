@@ -9,7 +9,7 @@ const WelcomePage = () => {
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       {/* Content */}
-      <div className="relative z-10 text-center items-center flex flex-col justify-center gap-4 h-full">
+      <div className="z-10 text-center items-center flex flex-col justify-center gap-4 h-full">
         <img
           src="/img/mascot-body.png"
           alt="Meal Mate Logo"
