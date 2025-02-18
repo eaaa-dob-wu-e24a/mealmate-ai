@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router";
 
 type Recipe = {
+  _id: string;
   title: string;
   image: string;
   categories: string[];
@@ -21,7 +23,8 @@ export default function RecipeLayout({
       <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
         {recipes.length > 0 ? (
           recipes.map((recipe, index) => (
-            <div
+            <Link
+              to={`/recipe/${recipe._id}`}
               key={index}
               className="rounded-lg overflow-hidden shadow-md relative h-32 flex flex-col-reverse justify-between"
               style={{
@@ -46,7 +49,7 @@ export default function RecipeLayout({
                   </span>
                 ))}
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p>No recipes available.</p>
