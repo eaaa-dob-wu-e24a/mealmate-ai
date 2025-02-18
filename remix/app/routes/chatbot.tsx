@@ -11,9 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
+import {
+  ChatBubble,
+  ChatBubbleAvatar,
+  ChatBubbleMessage,
+} from "~/components/ui/chat-bubble";
 import { getSession } from "~/lib/auth.server";
 import type { Session } from "~/types";
+import { Textarea } from "~/components/ui/textarea";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const session = await getSession(request);
@@ -85,13 +90,8 @@ export default function Chatbot() {
       )}
 
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-        <ChatBubble variant="received">
-          <ChatBubbleMessage>
-            <Markdown>Hej Mette! It is nice to see you back.</Markdown>
-          </ChatBubbleMessage>
-        </ChatBubble>
-
         {messages.map((m) => {
+          console.log(m);
           const toolCall = m?.toolInvocations?.[0];
           return (
             <Fragment key={m.id}>
@@ -101,6 +101,9 @@ export default function Chatbot() {
                 </p>
               )}
               <ChatBubble variant={m.role === "user" ? "sent" : "received"}>
+                {m.role === "assistant" && (
+                  <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                )}
                 <ChatBubbleMessage>
                   <Markdown>{m.content}</Markdown>
                 </ChatBubbleMessage>
@@ -129,9 +132,8 @@ export default function Chatbot() {
             <SelectItem value="mistral">Mistral</SelectItem>
           </SelectContent>
         </Select>
-        <Input
+        <Textarea
           value={input}
-          type="text"
           name="message"
           placeholder="Message Friendly Bison"
           className="w-full p-3 rounded-lg outline-none bg-[#E6E2D8] text-green-900 placeholder:text-[#103B28]"
@@ -139,7 +141,7 @@ export default function Chatbot() {
           onChange={handleInputChange}
         />
         <button
-          type="submit"
+          type="button"
           className="text-green-900 text-xl"
           // disabled={isPending}
         >
