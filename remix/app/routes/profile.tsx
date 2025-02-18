@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, Form } from "react-router";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/profile";
 
@@ -65,6 +65,17 @@ export default function Profile() {
               </div>
             )}
           </div>
+        </div>
+
+        <div className="mt-8">
+          <Form action="/sign-out" method="post">
+            <button
+              type="submit"
+              className="w-full bg-red-900 text-white py-2 px-4 rounded hover:bg-red-700"
+            >
+              Sign Out
+            </button>
+          </Form>
         </div>
       </div>
     </div>
