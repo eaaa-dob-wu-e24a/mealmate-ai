@@ -43,10 +43,20 @@ export default function RecipeArchive() {
         className="w-full h-[300px] rounded-lg"
       />
       <h1 className="text-2xl font-bold mt-4">{recipe.title}</h1>
-      <div className="mt-2 flex space-x-4 text-gray-600">
-        <p>Total Time: {recipe.preparation.total_time}</p>
-        <p>Prep: {recipe.preparation.prep_time}</p>
-        <p>Cook: {recipe.preparation.cook_time}</p>
+      <h2 className="mt-4">Preparation</h2>
+      <div className="mt-2 flex justify-between text-xs space-x-4 text-gray-600">
+        <p>
+          <span className="text-green-900 uppercase font-bold">Total Time</span>{" "}
+          <br /> {recipe.preparation.total_time}
+        </p>
+        <p>
+          <span className="text-green-900 uppercase font-bold">Prep</span>
+          <br /> {recipe.preparation.prep_time}
+        </p>
+        <p>
+          <span className="text-green-900 uppercase font-bold">Cook</span>{" "}
+          <br /> {recipe.preparation.cook_time}
+        </p>
       </div>
       <Tabs defaultValue="ingredients" className="mt-4">
         <TabsList className="w-full flex justify-between">
@@ -63,11 +73,11 @@ export default function RecipeArchive() {
               <h2 className="text-xl font-semibold mt-4">Ingredients</h2>
               <p>Servings</p>
             </div>
-            <div className="mt-4 flex items-center space-x-2 bg-gray-100 rounded-xl">
+            <div className="mt-4 py-2 flex items-center space-x-2 bg-gray-100 rounded-xl">
               <button className="px-2" onClick={() => adjustQuantity(-1)}>
                 -
               </button>
-              <span>
+              <span className="text-xs px-2">
                 {servings} {servings > 1}
               </span>
               <button className="px-2" onClick={() => adjustQuantity(1)}>
