@@ -1,7 +1,8 @@
 export const recipes = [
   {
     title: "Tomato Lentils Spaghetti",
-    image: "/img/recipe-mock/recipe1.jpg",
+    image:
+      "https://whiteblankspace.com/wp-content/uploads/2023/09/lentil-tomato-pasta.jpg",
     servings: 4,
     preparation: {
       total_time: "40 min",
@@ -32,10 +33,18 @@ export const recipes = [
     ],
     allergies: ["Gluten", "Dairy"],
     categories: ["Italian", "Vegetarian", "Quick & Easy"],
+    instructions: [
+      "Cook the lentils according to package instructions.",
+      "Boil the spaghetti until al dente.",
+      "In a pan, heat the tomato sauce and add cooked lentils.",
+      "Mix the spaghetti with the sauce and lentils.",
+      "Serve with grated Parmesan cheese on top.",
+    ],
   },
   {
     title: "Avocado Toast",
-    image: "/img/recipe-mock/recipe2.jpg",
+    image:
+      "https://images.unsplash.com/photo-1583508915443-506a888c443a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXZvY2FkbyB0b2FzdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "10 min",
@@ -66,10 +75,17 @@ export const recipes = [
     ],
     allergies: ["Gluten"],
     categories: ["Quick & Easy", "Vegan", "Vegetarian"],
+    instructions: [
+      "Toast the bread slices.",
+      "Mash the avocado and mix with lemon juice, salt, and pepper.",
+      "Spread the avocado mixture on the toasted bread.",
+      "Serve immediately.",
+    ],
   },
   {
     title: "Mango Smoothie",
-    image: "/img/recipe-mock/recipe3.jpg",
+    image:
+      "https://images.unsplash.com/photo-1610017042783-e6339372c841?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bWFuZ28gc21vb3RoaWV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "5 min",
@@ -100,10 +116,16 @@ export const recipes = [
     ],
     allergies: ["Dairy"],
     categories: ["Quick & Easy", "Vegetarian"],
+    instructions: [
+      "Peel and chop the mango and banana.",
+      "Blend all ingredients until smooth.",
+      "Serve immediately.",
+    ],
   },
   {
     title: "Grilled Chicken Salad",
-    image: "image_url_4",
+    image:
+      "https://images.unsplash.com/photo-1607532941433-5469f892c514?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z3JpbGxlZCBjaGlja2VuIHNhbGFkfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "20 min",
@@ -134,10 +156,18 @@ export const recipes = [
     ],
     allergies: [],
     categories: ["Gluten-Free", "Quick & Easy", "Mediterranean"],
+    instructions: [
+      "Grill the chicken breast until fully cooked.",
+      "Chop the lettuce, cherry tomatoes, and cucumber.",
+      "Mix all vegetables in a bowl.",
+      "Slice the grilled chicken and add to the salad.",
+      "Drizzle with olive oil and serve.",
+    ],
   },
   {
     title: "Oatmeal Breakfast Bowl",
-    image: "image_url_5",
+    image:
+      "https://images.unsplash.com/photo-1558222474-6562b38b9a06?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8b2F0bWVhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "10 min",
@@ -168,10 +198,16 @@ export const recipes = [
     ],
     allergies: ["Dairy", "Nuts"],
     categories: ["Vegetarian", "Quick & Easy"],
+    instructions: [
+      "Cook the oats with milk according to package instructions.",
+      "Top with honey, sliced banana, and almonds.",
+      "Serve immediately.",
+    ],
   },
   {
     title: "Pancakes",
-    image: "image_url_6",
+    image:
+      "https://images.unsplash.com/photo-1567620869825-c91c60dc3f09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGFuY2FrZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "20 min",
@@ -202,10 +238,18 @@ export const recipes = [
     ],
     allergies: ["Gluten", "Dairy", "Egg"],
     categories: ["Quick & Easy", "Desserts", "Vegetarian"],
+    instructions: [
+      "Mix flour, milk, egg, and baking powder to form a batter.",
+      "Heat a pan and melt butter.",
+      "Pour batter into the pan and cook until bubbles form on the surface.",
+      "Flip and cook until golden brown.",
+      "Serve with your favorite toppings.",
+    ],
   },
   {
     title: "Vegetable Stir Fry",
-    image: "image_url_7",
+    image:
+      "https://images.unsplash.com/photo-1547592180-85f1739905b9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dmVnZXRhYmxlIHN0aXIgZnJ5fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "25 min",
@@ -236,10 +280,18 @@ export const recipes = [
     ],
     allergies: ["Soy", "Gluten"],
     categories: ["Chinese", "Vegan", "Vegetarian", "Quick & Easy"],
+    instructions: [
+      "Chop all vegetables.",
+      "Heat olive oil in a pan and add vegetables.",
+      "Stir fry until vegetables are tender.",
+      "Add soy sauce and cook for another minute.",
+      "Serve hot.",
+    ],
   },
   {
     title: "Garlic Butter Shrimp",
-    image: "image_url_8",
+    image:
+      "https://images.unsplash.com/photo-1629852875951-25e348034702?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Z2FybGljIGJ1dHRlciBzaHJpbXB8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "15 min",
@@ -270,10 +322,17 @@ export const recipes = [
     ],
     allergies: ["Shellfish", "Dairy"],
     categories: ["Quick & Easy", "Fine Dining"],
+    instructions: [
+      "Heat butter in a pan and add minced garlic.",
+      "Add shrimp and cook until pink.",
+      "Add lemon juice and chopped parsley.",
+      "Serve immediately.",
+    ],
   },
   {
     title: "Homemade Pizza",
-    image: "image_url_9",
+    image:
+      "https://images.unsplash.com/photo-1593560708920-61d38aa2d467?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "1 hour",
@@ -304,10 +363,19 @@ export const recipes = [
     ],
     allergies: ["Gluten", "Dairy"],
     categories: ["Italian", "Quick & Easy"],
+    instructions: [
+      "Preheat oven to 220°C (430°F).",
+      "Roll out the pizza dough on a baking sheet.",
+      "Spread tomato sauce over the dough.",
+      "Add mozzarella cheese and pepperoni.",
+      "Drizzle with olive oil and bake for 15-20 minutes.",
+      "Serve hot.",
+    ],
   },
   {
     title: "Chocolate Chip Cookies",
-    image: "image_url_10",
+    image:
+      "https://images.unsplash.com/photo-1599044974983-98495819491a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y2hvY29sYXRlIGNoaXAgY29va2llc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
     servings: 4,
     preparation: {
       total_time: "30 min",
@@ -338,5 +406,14 @@ export const recipes = [
     ],
     allergies: ["Gluten", "Dairy", "Egg"],
     categories: ["Desserts", "Quick & Easy", "Vegetarian"],
+    instructions: [
+      "Preheat oven to 180°C (350°F).",
+      "Mix flour, butter, and sugar until creamy.",
+      "Add egg and mix well.",
+      "Stir in chocolate chips.",
+      "Drop spoonfuls of dough onto a baking sheet.",
+      "Bake for 10-12 minutes.",
+      "Cool on a wire rack before serving.",
+    ],
   },
 ];
