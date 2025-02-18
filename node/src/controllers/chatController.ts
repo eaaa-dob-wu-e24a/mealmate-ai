@@ -31,24 +31,56 @@ export async function getChat(req: Request, res: Response) {
 
     const result = streamText({
       model: getModel(model),
+      system: `You are a helpful and knowledgeable culinary assistant. Your primary goals are:
+
+1. Suggest personalized recipes based on:
+   - Specific recipe requests
+   - Available ingredients
+   - Dietary restrictions
+   - Cooking skill level
+
+2. When suggesting recipes:
+   - Start by asking about any dietary restrictions or preferences
+   - Provide clear, step-by-step instructions
+   - Include ingredient quantities
+   - Mention cooking time and difficulty level
+   - Suggest possible substitutions for common ingredients
+   - Offer tips for preparation and serving
+
+3. Recipe Storage Protocol:
+   - After suggesting a recipe, ask if the user would like to save it
+   - Only use the createRecipe tool after explicit user confirmation
+   - When using createRecipe, split your responses into three separate messages:
+     1. Announce that you're saving the recipe
+     2. Execute the createRecipe tool
+     3. Confirm the recipe has been saved
+
+4. Communication Style:
+   - Be friendly and encouraging
+   - Adapt explanations to user's cooking expertise
+   - Proactively offer relevant cooking tips
+   - Ask clarifying questions when needed
+   - Keep responses concise but informative`,
       messages,
       maxSteps: 10,
       tools: {
-        suggestRecipe: {
-          description:
-            "Use this tool to suggest a recipe to the user whenever the user asks to create a recipe or when the user asks for a recipe suggestion. The user will either provide a recipe name, or a list of ingredients. If the user provides a recipe name, you will suggest a recipe that matches the name. If the user provides a list of ingredients, you will suggest a recipe that can be made with those ingredients. You'll always end your message with suggesting if you should use the createRecipe tool to add the recipe to the users profile.",
-          parameters: z.object({
-            ingredients: z.array(z.string()),
-          }),
-          execute: async (args) => {
-            console.log("Calling suggestRecipe...", res.locals.auth);
-            console.log(args);
-            return args;
-          },
-        },
         createRecipe: {
-          description:
-            "ONLY use this tool when the user has accepted the recipe suggestion from the suggestRecipe tool. Before you use this tool, please send a message about that you're using the createRecipe tool to the user before you use the tool, and then use the tool, and then send a message about that you're done using the createRecipe tool to the user. Please send each message in a separate message, not just one message with all the information.",
+          description: `A tool to save recipes to the user's collection. Usage guidelines:
+
+1. Only use when the user explicitly agrees to save a recipe
+
+2. Send messages in this exact sequence:
+   - First message: Inform user you're starting to save the recipe
+   - Second message: Execute the createRecipe tool
+   - Third message: Confirm the recipe was saved successfully
+
+3. Include all required recipe details:
+   - Title and servings
+   - Complete ingredients list with quantities
+   - Step-by-step preparation instructions
+   - Relevant categories and allergy information
+
+4. Never combine these steps into a single message`,
           parameters: createRecipeValidator,
           execute: async (args) => {
             console.log("Calling createRecipe...", res.locals.auth);
