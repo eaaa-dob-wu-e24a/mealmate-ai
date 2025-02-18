@@ -1,10 +1,8 @@
-import type { Route } from "./+types/navbar";
 import { NavLink, Outlet } from "react-router";
 
-import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { FiHome } from "react-icons/fi";
 import { FaRegCircleUser } from "react-icons/fa6";
-import { HiOutlineUsers } from "react-icons/hi2";
+import { FiHome } from "react-icons/fi";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 
 import { FaRegBookmark } from "react-icons/fa";
 
@@ -21,7 +19,11 @@ export default function BottomNav() {
 
   return (
     <>
-      <nav className="fixed z-30 bottom-0 left-0 w-full bg-[#F8F5EF] py-3 border-t border-gray-300">
+      <div>
+        <Outlet />
+      </div>
+
+      <nav className="sticky z-30 bottom-0  bg-[#F8F5EF] py-3 border-t border-gray-300">
         <ul className="flex justify-around items-center max-w-md mx-auto list-none p-0 m-0">
           {navItems.map((item, index) => (
             <li key={index}>
@@ -39,7 +41,6 @@ export default function BottomNav() {
           ))}
         </ul>
       </nav>
-      <Outlet />
     </>
   );
 }

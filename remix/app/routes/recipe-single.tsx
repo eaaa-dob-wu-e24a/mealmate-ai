@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/recipe-single";
-import { c } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 type Recipe = {
   title: string;
@@ -50,7 +49,7 @@ export default function RecipeArchive() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-4 bg-white">
+    <div className="max-w-lg mx-auto p-4 bg-white min-h-[calc(100svh-136px)] overflow-auto">
       <img
         src={recipe.image}
         alt={recipe.title}

@@ -24,7 +24,7 @@ export default function RecipeArchive() {
   const { recipes } = useLoaderData<typeof loader>();
 
   return (
-    <div className="section-wrapper">
+    <div className="section-wrapper h-[calc(100svh-136px)] overflow-auto">
       <RecipeLayout recipes={recipes} title="Recipe Archive" />
     </div>
   );

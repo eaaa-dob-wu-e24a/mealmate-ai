@@ -13,7 +13,7 @@
 }
 
 .section-wrapper {
-  @apply py-0 px-6;
+  @apply pt-0 px-6 pb-6;
 }
 
 .section-distance {

@@ -12,7 +12,7 @@ export default function Profile() {
   const { user } = useLoaderData<typeof loader>();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-[calc(100svh-136px)] overflow-auto bg-gray-50 p-8">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Profile

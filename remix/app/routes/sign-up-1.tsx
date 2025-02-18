@@ -19,7 +19,7 @@ export default function SignUp1() {
   };
 
   return (
-    <div className="onboarding-container section-wrapper h-screen flex flex-col justify-between">
+    <div className="onboarding-container section-wrapper min-h-[calc(100svh-66px)] flex flex-col justify-between">
       <h1 className="text-2xl pt-10 font-bold text-center">
         Welcome to mealmate!
       </h1>
