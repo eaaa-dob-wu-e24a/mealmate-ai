@@ -4,8 +4,8 @@ import { anthropic } from "@ai-sdk/anthropic";
 import { mistral } from "@ai-sdk/mistral";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
-import { createRecipeValidator } from "validators/index.js";
-import { createRecipe } from "queries/recipe.js";
+import { createRecipeValidator } from "../validators/index.js";
+import { createRecipe } from "../queries/recipe.js";
 
 function getModel(model: string) {
   if (model === "openai") {

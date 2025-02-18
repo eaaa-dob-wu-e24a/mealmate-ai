@@ -1,8 +1,8 @@
 import { openai } from "@ai-sdk/openai";
 import { experimental_generateImage as generateImage } from "ai";
-import { createRecipeValidator } from "validators/index.js";
+import { createRecipeValidator } from "../validators/index.js";
 import { v2 as cloudinary } from "cloudinary";
-import Recipe from "models/recipe.js";
+import Recipe from "../models/recipe.js";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
