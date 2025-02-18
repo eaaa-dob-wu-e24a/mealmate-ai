@@ -90,7 +90,7 @@ export default function RecipeArchive() {
               <li key={index} className="flex justify-between border-b py-2">
                 <span>{ing.name}</span>
                 <span>
-                  {(ing.quantity.amount * servings) / recipe.servings}{" "}
+                  {(Number(ing.quantity.amount) * servings) / recipe.servings}{" "}
                   {ing.quantity.unit}
                 </span>
               </li>
