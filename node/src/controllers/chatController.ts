@@ -48,7 +48,7 @@ export async function getChat(req: Request, res: Response) {
         },
         createRecipe: {
           description:
-            "ONLY use this tool when the user has accepted the recipe suggestion from the suggestRecipe tool, also create a very detailed description of an fitting image of the recipe, that the DALLE model can use to generate an image. Before you use this tool, please send a message about that you're using the createRecipe tool to the user before you use the tool, and then use the tool, and then send a message about that you're done using the createRecipe tool to the user.",
+            "ONLY use this tool when the user has accepted the recipe suggestion from the suggestRecipe tool. Before you use this tool, please send a message about that you're using the createRecipe tool to the user before you use the tool, and then use the tool, and then send a message about that you're done using the createRecipe tool to the user. Please send each message in a separate message, not just one message with all the information.",
           parameters: createRecipeValidator,
           execute: async (args) => {
             console.log("Calling createRecipe...", res.locals.auth);

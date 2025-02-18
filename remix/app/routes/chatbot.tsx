@@ -21,6 +21,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Chatbot() {
+  const [loading, setLoading] = useState(false);
   const [model, setModel] = useState<"openai" | "anthropic" | "mistral">(
     "openai"
   );
@@ -42,10 +43,15 @@ export default function Chatbot() {
       model,
     },
     maxSteps: 10,
+    onFinish: (args) => {
+      console.log(args);
+      setLoading(false);
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     setHasStartedChat(true);
+    setLoading(true);
     originalHandleSubmit(e);
   };
 
@@ -82,16 +88,18 @@ export default function Chatbot() {
           </ChatBubbleMessage>
         </ChatBubble>
 
-        {messages.map((m) => (
-          <ChatBubble
-            key={m.id}
-            variant={m.role === "user" ? "sent" : "received"}
-          >
-            <ChatBubbleMessage>
-              <Markdown>{m.content}</Markdown>
-            </ChatBubbleMessage>
-          </ChatBubble>
-        ))}
+        {messages.map((m) => {
+          return (
+            <ChatBubble
+              key={m.id}
+              variant={m.role === "user" ? "sent" : "received"}
+            >
+              <ChatBubbleMessage>
+                <Markdown>{m.content}</Markdown>
+              </ChatBubbleMessage>
+            </ChatBubble>
+          );
+        })}
       </div>
 
       <form
