@@ -12,14 +12,15 @@ type Recipe = {
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request);
   const user = session?.user;
+  const resposne = await fetch(`${process.env.API_URL}/api/recipes`, {
+    headers: {
+      Authorization: `Bearer ${session?.token}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const recipes = await resposne.json();
 
-  const { recipes } = await import("~/data");
-  const formattedRecipes = recipes.map(({ title, image, categories }) => ({
-    title,
-    image,
-    categories,
-  }));
-  return { user, recipes: formattedRecipes };
+  return { user, recipes };
 }
 
 export default function Dashboard() {
