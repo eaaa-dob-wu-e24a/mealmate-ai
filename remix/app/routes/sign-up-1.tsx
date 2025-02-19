@@ -61,6 +61,14 @@ export default function SignUp1() {
             Next
           </Button>
         </Link>
+
+        <p className="text-sm text-gray-500">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500">
+            Login
+          </Link>
+        </p>
+
         <ProgressDots totalSteps={3} currentStep={1} />
       </div>
     </div>

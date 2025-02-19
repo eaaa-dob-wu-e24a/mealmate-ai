@@ -6,24 +6,7 @@ import { Button } from "~/components/ui/button";
 import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
 import { updateUser } from "~/queries/user";
 import { useState } from "react";
-
-const availableTags = [
-  "Italian",
-  "Chinese",
-  "Mexican",
-  "Indian",
-  "Japanese",
-  "Thai",
-  "Mediterranean",
-  "Vegetarian",
-  "Vegan",
-  "Gluten-Free",
-  "Spicy",
-  "Desserts",
-  "Seafood",
-  "BBQ",
-  "Fast Food",
-];
+import availableTags from "~/layouts/tags";
 
 export default function SignUp3() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
