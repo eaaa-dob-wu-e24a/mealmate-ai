@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "react-router";
-import RecipeLayout from "~/components/RecipeLayout";
+import RecipeLayout from "~/components/recipe-layout";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/dashboard";
 import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
@@ -61,13 +61,17 @@ export default function Dashboard() {
           <Link to="/chatbot">
             <ChatBubble variant="received" layout="intro">
               <ChatBubbleMessage>
-                <p>Hey {user?.username}! It is nice to see you back.</p>
+                {recipes.length === 0 ? (
+                  <p>
+                    Hi {user?.username}! I'm Mike, let me help you find your
+                    next recipe!
+                  </p>
+                ) : (
+                  <p>Hey {user?.username}! It is nice to see you back.</p>
+                )}
               </ChatBubbleMessage>
             </ChatBubble>
           </Link>
-        </div>
-        <div>
-          <p>Choose category</p>
         </div>
 
         <RecipeLayout recipes={recipes} />
