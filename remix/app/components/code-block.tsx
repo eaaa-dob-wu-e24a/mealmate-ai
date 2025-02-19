@@ -7,7 +7,7 @@ interface CodeBlockProps {
   children: any;
 }
 
-export function CodeBlock({
+export default function CodeBlock({
   node,
   inline,
   className,

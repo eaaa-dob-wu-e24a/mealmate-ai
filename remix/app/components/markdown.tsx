@@ -1,8 +1,8 @@
 import { memo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { CodeBlock } from "./code-block";
 import { Link } from "react-router";
+import CodeBlock from "./code-block";
 
 const components: Partial<Components> = {
   // @ts-expect-error
