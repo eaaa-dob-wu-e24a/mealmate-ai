@@ -64,6 +64,9 @@ export default function Chatbot() {
 
       setLoading(false);
     },
+    onToolCall({ toolCall }) {
+      console.log(toolCall);
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -127,7 +130,7 @@ export default function Chatbot() {
                           <Loader2 className="w-4 h-4 animate-spin" />
                         </div>
                       )}
-                      {!loading && m.role === "assistant" && (
+                      {!isLoading && m.role === "assistant" && (
                         <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                       )}
 
@@ -163,7 +166,7 @@ export default function Chatbot() {
                             </div>
                           )}
 
-                          {!loading && m.role === "assistant" && (
+                          {!isLoading && m.role === "assistant" && (
                             <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                           )}
 
@@ -191,7 +194,7 @@ export default function Chatbot() {
                             </div>
                           )}
 
-                          {!loading && m.role === "assistant" && (
+                          {!isLoading && m.role === "assistant" && (
                             <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                           )}
 

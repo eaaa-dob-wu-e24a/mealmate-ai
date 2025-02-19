@@ -7,14 +7,16 @@ import {
   useSearchParams,
   type ActionFunctionArgs,
 } from "react-router";
-import { Button } from "~/components/ui/button";
-import { ChatBubbleAvatar } from "~/components/ui/chat-bubble";
-import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
-import { Input } from "~/components/ui/input";
 import { BackButton } from "~/components/ui/back-button";
+import { Button } from "~/components/ui/button";
+import {
+  ChatBubble,
+  ChatBubbleAvatar,
+  ChatBubbleMessage,
+} from "~/components/ui/chat-bubble";
+import { Input } from "~/components/ui/input";
 import { ProgressDots } from "~/components/ui/progress-dots";
 import { setSession } from "~/lib/auth.server";
-import { useState } from "react";
 import { login, signUp } from "~/queries/auth";
 
 export default function SignUp2() {
@@ -44,19 +46,31 @@ export default function SignUp2() {
           type="text"
           name="username"
           placeholder="Username"
-          className={`${error?.includes("username") ? "border-red-500 focus:border-red-500" : ""}`}
+          className={`${
+            error?.includes("username")
+              ? "border-red-500 focus:border-red-500"
+              : ""
+          }`}
         />
         <Input
           type="email"
           name="email"
           placeholder="Email"
-          className={`${error?.includes("email") ? "border-red-500 focus:border-red-500" : ""}`}
+          className={`${
+            error?.includes("email")
+              ? "border-red-500 focus:border-red-500"
+              : ""
+          }`}
         />
         <Input
           type="password"
           name="password"
           placeholder="Password"
-          className={`${error?.includes("password") ? "border-red-500 focus:border-red-500" : ""}`}
+          className={`${
+            error?.includes("password")
+              ? "border-red-500 focus:border-red-500"
+              : ""
+          }`}
         />
         <Button className="w-full" type="submit">
           Sign Up
