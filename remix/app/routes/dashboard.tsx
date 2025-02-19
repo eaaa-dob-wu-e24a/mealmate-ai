@@ -1,20 +1,29 @@
 import { Link, useLoaderData } from "react-router";
-import RecipeLayout from "~/components/recipe-layout"; // Import the shared layout
+import RecipeLayout from "~/components/recipe-layout";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/dashboard";
 import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";
+import RecipeSearch from "~/components/search";
+import type { Recipe } from "~/types"; // Import the Recipe type
 
-type Recipe = {
-  _id: string; // Add this to match the type in RecipeLayout
-  title: string;
-  image: string;
-  categories: string[];
+type DashboardLoaderData = {
+  user: any;
+  recipes: Recipe[];
+  q: string;
 };
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request);
   const user = session?.user;
-  const response = await fetch(`${process.env.API_URL}/api/recipes`, {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q") || "";
+
+  let apiUrl = `${process.env.API_URL}/api/recipes`;
+  if (q) {
+    apiUrl = `${process.env.API_URL}/api/recipes/search?q=${q}`;
+  }
+
+  const response = await fetch(apiUrl, {
     headers: {
       Authorization: `Bearer ${session?.token}`,
       "Content-Type": "application/json",
@@ -22,11 +31,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   });
   const recipes = await response.json();
 
-  return { user, recipes };
+  return { user, recipes, q };
 }
 
 export default function Dashboard() {
-  const { user, recipes } = useLoaderData<typeof loader>();
+  const { user, recipes, q } = useLoaderData<
+    typeof loader
+  >() as DashboardLoaderData;
 
   return (
     <div className="mx-auto min-h-[calc(100svh-136px)] overflow-auto">
@@ -38,6 +49,9 @@ export default function Dashboard() {
         />
       </div>
       <div className="section-wrapper">
+        <div className="pt-4">
+          <RecipeSearch recipes={recipes} q={q} />
+        </div>
         <div className="flex items-center justify-between">
           <img
             src="/img/mascot-head.png"
