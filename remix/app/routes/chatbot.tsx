@@ -265,7 +265,7 @@ export default function Chatbot() {
               handleSubmit(e);
             }
           }}
-          placeholder="Message Friendly Bison"
+          placeholder="Message Mike"
           className="w-full min-h-[80px] resize-none p-3 rounded-lg outline-none bg-[#E6E2D8] text-green-900 placeholder:text-[#103B28]"
           // disabled={isPending}
           onChange={handleInputChange}
