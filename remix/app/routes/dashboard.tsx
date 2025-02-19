@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "react-router";
-import RecipeLayout from "~/components/RecipeLayout"; // Import the shared layout
+import RecipeLayout from "~/components/recipe-layout"; // Import the shared layout
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/dashboard";
 import { ChatBubble, ChatBubbleMessage } from "~/components/ui/chat-bubble";

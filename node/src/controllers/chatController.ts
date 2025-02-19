@@ -94,15 +94,12 @@ export async function getChat(req: Request, res: Response) {
             console.log("Calling createRecipe...", res.locals.auth);
             console.log(args);
 
-            await createRecipe(args, res.locals.auth.user._id);
+            const recipe = await createRecipe(args, res.locals.auth.user._id);
             return {
               title: args.title,
-              image: args.image,
-              servings: args.servings,
-              preparation: args.preparation,
-              ingredients: args.ingredients,
-              allergies: args.allergies,
+              image: recipe.image,
               categories: args.categories,
+              recipe_id: recipe._id,
             };
           },
         },
