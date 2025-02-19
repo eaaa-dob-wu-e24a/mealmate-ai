@@ -20,7 +20,7 @@ export default function RecipeLayout({
   return (
     <div className="mx-auto">
       <h1 className="text-2xl font-bold mb-6">{title}</h1>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 lg:grid-cols-[repeat(auto-fill,minmax(150px,1fr))]">
         {recipes.length > 0 ? (
           recipes.map((recipe, index) => (
             <Link
