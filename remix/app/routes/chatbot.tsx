@@ -3,7 +3,9 @@ import { Loader2, Send } from "lucide-react";
 import { Fragment, useState } from "react";
 import { FaMicrophone } from "react-icons/fa";
 import { useLoaderData, type LoaderFunctionArgs } from "react-router";
+import { z } from "zod";
 import { Markdown } from "~/components/markdown";
+import Recipe from "~/components/recipe";
 import { Button } from "~/components/ui/button";
 import {
   ChatBubble,
@@ -17,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { Skeleton } from "~/components/ui/skeleton";
 import { Textarea } from "~/components/ui/textarea";
 import { useScrollToBottom } from "~/hooks/use-scroll-to-bottom";
 import { getSession } from "~/lib/auth.server";
@@ -60,9 +63,6 @@ export default function Chatbot() {
       }
 
       setLoading(false);
-    },
-    onToolCall({ toolCall }) {
-      console.log(toolCall);
     },
   });
 
@@ -108,29 +108,135 @@ export default function Chatbot() {
         )}
 
         {messages.map((m, i) => {
-          const toolCall = m?.toolInvocations?.[0];
           return (
             <Fragment key={m.id}>
-              {toolCall && (
-                <p className="text-sm text-gray-500 flex items-center gap-2">
-                  Calling: {toolCall.toolName}
-                </p>
-              )}
-              <ChatBubble variant={m.role === "user" ? "sent" : "received"}>
-                {i === messages.length - 1 &&
-                  loading &&
-                  m.role === "assistant" && (
-                    <div className="h-10 w-10 flex items-center justify-center">
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    </div>
-                  )}
-                {!loading && m.role === "assistant" && (
-                  <ChatBubbleAvatar fallback="M" src="/mascot.png" />
-                )}
-                <ChatBubbleMessage>
-                  <Markdown>{m.content}</Markdown>
-                </ChatBubbleMessage>
-              </ChatBubble>
+              {m.parts?.map((t, index) => {
+                const isLoading =
+                  m.role === "assistant" &&
+                  i === messages.length - 1 &&
+                  loading;
+
+                if (t.type === "text") {
+                  return (
+                    <ChatBubble
+                      key={t.text}
+                      variant={m.role === "user" ? "sent" : "received"}
+                    >
+                      {isLoading && index === m.parts.length - 1 && (
+                        <div className="h-10 min-w-10 max-w-10 flex items-center justify-center">
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        </div>
+                      )}
+                      {!loading && m.role === "assistant" && (
+                        <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                      )}
+
+                      {isLoading && index !== m.parts.length - 1 && (
+                        <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                      )}
+
+                      <ChatBubbleMessage>
+                        <Markdown>{t.text}</Markdown>
+                      </ChatBubbleMessage>
+                    </ChatBubble>
+                  );
+                }
+
+                if (t.type === "tool-invocation") {
+                  if (t.toolInvocation.toolName === "createRecipe") {
+                    const schema = z.object({
+                      recipe_id: z.string(),
+                      image: z.string(),
+                      title: z.string(),
+                      categories: z.array(z.string()),
+                    });
+
+                    if (t?.toolInvocation?.state !== "result")
+                      return (
+                        <ChatBubble
+                          key={t.toolInvocation.toolCallId}
+                          variant={m.role === "user" ? "sent" : "received"}
+                        >
+                          {isLoading && index === m.parts.length - 1 && (
+                            <div className="h-10 min-w-10 max-w-10 flex items-center justify-center">
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            </div>
+                          )}
+
+                          {!loading && m.role === "assistant" && (
+                            <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                          )}
+
+                          {isLoading && index !== m.parts.length - 1 && (
+                            <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                          )}
+
+                          <Skeleton className="w-full h-32" />
+                        </ChatBubble>
+                      );
+
+                    const result = t?.toolInvocation?.result;
+
+                    const parsedResult = schema.safeParse(result);
+
+                    if (!parsedResult.success) {
+                      return (
+                        <ChatBubble
+                          key={t.toolInvocation.toolCallId}
+                          variant={m.role === "user" ? "sent" : "received"}
+                        >
+                          {isLoading && index === m.parts.length - 1 && (
+                            <div className="h-10 min-w-10 max-w-10 flex items-center justify-center">
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            </div>
+                          )}
+
+                          {!loading && m.role === "assistant" && (
+                            <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                          )}
+
+                          {isLoading && index !== m.parts.length - 1 && (
+                            <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                          )}
+
+                          <div className="text-red-500 h-32 flex items-center justify-center">
+                            There was an error creating the recipe. Please try
+                            again.
+                          </div>
+                        </ChatBubble>
+                      );
+                    }
+
+                    return (
+                      <ChatBubble
+                        key={t.toolInvocation.toolCallId}
+                        variant={m.role === "user" ? "sent" : "received"}
+                      >
+                        {isLoading && index === m.parts.length - 1 && (
+                          <div className="h-10 min-w-10 max-w-10 flex items-center justify-center">
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          </div>
+                        )}
+
+                        {!loading && m.role === "assistant" && (
+                          <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                        )}
+
+                        {isLoading && index !== m.parts.length - 1 && (
+                          <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                        )}
+
+                        <Recipe
+                          id={parsedResult.data.recipe_id}
+                          image={parsedResult.data.image}
+                          title={parsedResult.data.title}
+                          categories={parsedResult.data.categories}
+                        />
+                      </ChatBubble>
+                    );
+                  }
+                }
+              })}
             </Fragment>
           );
         })}

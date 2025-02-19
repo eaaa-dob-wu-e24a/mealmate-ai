@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router";
-import RecipeLayout from "~/components/RecipeLayout";
+import RecipeLayout from "~/components/recipe-layout";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/profile";
 type Recipe = {
