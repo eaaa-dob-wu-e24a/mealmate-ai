@@ -1,0 +1,15 @@
+meta {
+  name: Search Recipes
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{api_url}}/api/recipes/search?q
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: $2b$10$H.umEn0TtPYOlpSDUbUf8eWSl4VjIE4vcAy00pvAtPBV1ATBb8tru
+}

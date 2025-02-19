@@ -1,12 +1,8 @@
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import RecipeLayout from "~/components/recipe-layout";
+import { Button } from "~/components/ui/button";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/profile";
-type Recipe = {
-  title: string;
-  image: string;
-  categories: string[];
-};
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request);
@@ -25,7 +21,14 @@ export default function RecipeArchive() {
 
   return (
     <div className="section-wrapper mt-10 h-[calc(100svh-136px)] overflow-auto">
-      <RecipeLayout recipes={recipes} title="Recipe Archive" />
+      <div>
+        <RecipeLayout recipes={recipes} title="Recipe Archive" />
+      </div>
+      <div className="flex justify-center mt-10">
+        <Link to="/chatbot">
+          <Button variant="outline">Chat with Mike for more recipes</Button>
+        </Link>
+      </div>
     </div>
   );
 }
