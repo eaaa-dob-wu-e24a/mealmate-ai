@@ -61,7 +61,7 @@ export default function RecipeLayout({
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(130px,1fr))] gap-4 ">
         {filteredRecipes.length > 0 ? (
           filteredRecipes.map((recipe, index) => (
             <Link
