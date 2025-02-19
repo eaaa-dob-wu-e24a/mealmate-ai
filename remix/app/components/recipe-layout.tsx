@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import Recipe from "./recipe";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
+import RecipeSearch from "./search";
 
 type Recipe = {
   _id: string;
@@ -33,7 +34,9 @@ export default function RecipeLayout({
   return (
     <div className="mx-auto">
       <h1 className="text-2xl font-bold mb-6">{title}</h1>
-
+      <div className="mb-4">
+        <RecipeSearch recipes={recipes} />
+      </div>
       <div className="relative mb-6 w-full">
         <div className="flex overflow-x-auto scrollbar-hide pb-2 -mb-2 gap-2">
           <div className="flex gap-2 snap-x snap-mandatory">

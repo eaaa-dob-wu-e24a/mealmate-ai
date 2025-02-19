@@ -49,9 +49,6 @@ export default function Dashboard() {
         />
       </div>
       <div className="section-wrapper">
-        <div className="pt-4">
-          <RecipeSearch recipes={recipes} q={q} />
-        </div>
         <div className="flex items-center justify-between">
           <img
             src="/img/mascot-head.png"
