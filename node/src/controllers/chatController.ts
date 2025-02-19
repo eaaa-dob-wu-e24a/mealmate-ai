@@ -91,7 +91,6 @@ export async function getChat(req: Request, res: Response) {
 4. Never combine these steps into a single message`,
           parameters: createRecipeValidator,
           execute: async (args) => {
-            console.log("Calling createRecipe...", res.locals.auth);
             console.log(args);
 
             const recipe = await createRecipe(args, res.locals.auth.user._id);

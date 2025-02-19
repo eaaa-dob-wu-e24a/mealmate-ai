@@ -64,9 +64,6 @@ export default function Chatbot() {
 
       setLoading(false);
     },
-    onToolCall(args) {
-      console.log("toolCall", args);
-    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -134,7 +131,7 @@ export default function Chatbot() {
                         <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                       )}
 
-                      {isLoading && index === m.parts.length - 1 && (
+                      {isLoading && index !== m.parts.length - 1 && (
                         <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                       )}
 
@@ -170,7 +167,7 @@ export default function Chatbot() {
                             <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                           )}
 
-                          {isLoading && index === m.parts.length - 1 && (
+                          {isLoading && index !== m.parts.length - 1 && (
                             <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                           )}
 
@@ -188,7 +185,7 @@ export default function Chatbot() {
                           key={t.toolInvocation.toolCallId}
                           variant={m.role === "user" ? "sent" : "received"}
                         >
-                          {isLoading && (
+                          {isLoading && index === m.parts.length - 1 && (
                             <div className="h-10 min-w-10 max-w-10 flex items-center justify-center">
                               <Loader2 className="w-4 h-4 animate-spin" />
                             </div>
@@ -198,14 +195,9 @@ export default function Chatbot() {
                             <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                           )}
 
-                          {isLoading &&
-                            index === m.parts.length - 1 &&
-                            m.role === "assistant" && (
-                              <ChatBubbleAvatar
-                                fallback="M"
-                                src="/mascot.png"
-                              />
-                            )}
+                          {isLoading && index !== m.parts.length - 1 && (
+                            <ChatBubbleAvatar fallback="M" src="/mascot.png" />
+                          )}
 
                           <div className="text-red-500 h-32 flex items-center justify-center">
                             There was an error creating the recipe. Please try
@@ -230,7 +222,7 @@ export default function Chatbot() {
                           <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                         )}
 
-                        {isLoading && index === m.parts.length - 1 && (
+                        {isLoading && index !== m.parts.length - 1 && (
                           <ChatBubbleAvatar fallback="M" src="/mascot.png" />
                         )}
 
