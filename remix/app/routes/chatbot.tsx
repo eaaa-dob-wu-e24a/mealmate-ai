@@ -40,13 +40,19 @@ export default function Chatbot() {
 
   const { session } = useLoaderData<{ session: Session | null }>();
 
+  const isNotRender = Boolean(import.meta.env.VITE_IS_NOT_RENDER);
+
+  const apiUrl = isNotRender
+    ? `${import.meta.env.VITE_API_URL}/api/chat`
+    : `https://plantmate-ai-fan.onrender.com/api/chat`;
+
   const {
     messages,
     input,
     handleInputChange,
     handleSubmit: originalHandleSubmit,
   } = useChat({
-    api: import.meta.env.VITE_API_URL + `/api/chat`,
+    api: apiUrl,
     headers: {
       Authorization: `Bearer ${session?.token}`,
     },
