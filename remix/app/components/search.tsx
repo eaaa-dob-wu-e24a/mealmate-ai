@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, type ChangeEvent } from "react";
 import type { Recipe } from "~/types";
-import { getSession } from "~/lib/auth.server";
 import type { Route } from "../+types/root";
 import { Form, useSubmit, useNavigation } from "react-router";
+import { Input } from "~/components/ui/input";
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const session = await getSession(request);
   const url = new URL(request.url);
   const q = url.searchParams.get("q") || "";
 
@@ -14,24 +13,14 @@ export async function loader({ request }: Route.LoaderArgs) {
     apiUrl = `${process.env.API_URL}/api/recipes/search?q=${q}`;
   }
 
-  const response = await fetch(apiUrl, {
-    headers: {
-      Authorization: `Bearer ${session?.token}`,
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
+  const response = await fetch(apiUrl);
   const recipes = await response.json();
+
   return { recipes, q };
 }
 
-function RecipeSearch({ loaderData }: Route.ComponentProps) {
-  const { recipes, q } = loaderData || { recipes: [], q: "" };
-  const [searchTerm, setSearchTerm] = useState(q || "");
+function RecipeSearch({ recipes, q }: { recipes: Recipe[]; q: string }) {
+  const [searchTerm, setSearchTerm] = useState<string>(q);
   const [searchResults, setSearchResults] = useState<Recipe[]>(recipes);
   const submit = useSubmit();
   const navigation = useNavigation();
@@ -40,16 +29,32 @@ function RecipeSearch({ loaderData }: Route.ComponentProps) {
     setSearchResults(recipes);
   }, [recipes]);
 
-  const handleInputChange = (event) => {
+  useEffect(() => {
+    setSearchTerm(q);
+  }, [q]);
+
+  // Debounce search input
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchTerm !== q) {
+        const form = document.getElementById("search-form") as HTMLFormElement;
+        submit(form, { replace: true });
+      }
+    }, 300); // 300ms debounce
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, q, submit]);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    submit(event.currentTarget, { replace: true });
   };
 
   return (
     <div>
       <Form id="search-form" role="search">
-        <input
+        <Input
           aria-label="Search recipes"
+          defaultValue={q}
           placeholder="Search for recipes..."
           type="search"
           id="q"
@@ -58,16 +63,11 @@ function RecipeSearch({ loaderData }: Route.ComponentProps) {
           onChange={handleInputChange}
         />
       </Form>
-
-      {searchResults.length === 0 && searchTerm !== "" ? (
-        <p>No recipes found.</p>
-      ) : (
-        <ul>
-          {searchResults.map((recipe) => (
-            <li key={recipe._id}>{recipe.title}</li>
-          ))}
-        </ul>
-      )}
+      <ul>
+        {searchResults.map((recipe) => (
+          <li key={recipe._id}></li>
+        ))}
+      </ul>
     </div>
   );
 }
