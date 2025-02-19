@@ -2,7 +2,9 @@ import { z } from "zod";
 
 export const createRecipeValidator = z.object({
   title: z.string(),
-  image_description_for_dalle: z.string(),
+  image_description_for_dalle: z
+    .string()
+    .describe("A description of the image you want to generate for the recipe"),
   servings: z.number(),
   preparation: z.object({
     total_time: z.string(),
