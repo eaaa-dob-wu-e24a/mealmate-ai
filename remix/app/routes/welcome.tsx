@@ -20,7 +20,7 @@ const WelcomePage = () => {
         <div className=" w-full flex flex-col gap-4 bottom-4 left-4 right-4">
           <Link
             to="/login"
-            className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+            className={cn(buttonVariants({ variant: "outline2", size: "lg" }))}
           >
             Login
           </Link>
