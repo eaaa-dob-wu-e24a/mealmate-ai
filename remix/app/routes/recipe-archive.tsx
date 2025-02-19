@@ -3,21 +3,32 @@ import RecipeLayout from "~/components/recipe-layout";
 import { Button } from "~/components/ui/button";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/profile";
+import RecipeSearch from "~/components/search";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request);
+  const user = session?.user;
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q") || "";
 
-  const resposne = await fetch(`${process.env.API_URL}/api/recipes`, {
+  let apiUrl = `${process.env.API_URL}/api/recipes`;
+  if (q) {
+    apiUrl = `${process.env.API_URL}/api/recipes/search?q=${q}`;
+  }
+
+  const response = await fetch(apiUrl, {
     headers: {
       Authorization: `Bearer ${session?.token}`,
       "Content-Type": "application/json",
     },
   });
-  const recipes = await resposne.json();
-  return { recipes };
+  const recipes = await response.json();
+
+  return { user, recipes, q };
 }
+
 export default function RecipeArchive() {
-  const { recipes } = useLoaderData<typeof loader>();
+  const { recipes, q } = useLoaderData<typeof loader>();
 
   return (
     <div className="section-wrapper mt-10 h-[calc(100svh-136px)] overflow-auto">

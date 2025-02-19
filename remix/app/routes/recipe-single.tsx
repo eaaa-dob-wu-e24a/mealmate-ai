@@ -112,10 +112,11 @@ export default function RecipeArchive() {
         </TabsContent>
         <TabsContent value="instructions">
           <h2 className="text-xl font-semibold mt-4">Instructions</h2>
-          <ul>
+          <ul className="mt-2 space-y-4">
             {recipe.instructions.map((step, index) => (
-              <li key={index} className="mt-2">
-                {step}
+              <li key={index} className="mt-2 flex">
+                <span className="font-medium mr-2">{index + 1}.</span>
+                <span>{step}</span>
               </li>
             ))}
           </ul>
