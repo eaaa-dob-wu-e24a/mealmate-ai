@@ -21,12 +21,14 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 function RecipeSearch({ recipes, q }: { recipes: Recipe[]; q: string }) {
   const [searchTerm, setSearchTerm] = useState<string>(q);
-  const [searchResults, setSearchResults] = useState<Recipe[]>(recipes);
+  const [searchResults, setSearchResults] = useState<Recipe[]>(recipes || []);
   const submit = useSubmit();
   const navigation = useNavigation();
 
+  console.log(searchResults);
+
   useEffect(() => {
-    setSearchResults(recipes);
+    setSearchResults(recipes || []);
   }, [recipes]);
 
   useEffect(() => {
@@ -63,11 +65,7 @@ function RecipeSearch({ recipes, q }: { recipes: Recipe[]; q: string }) {
           onChange={handleInputChange}
         />
       </Form>
-      <ul>
-        {searchResults.map((recipe) => (
-          <li key={recipe._id}></li>
-        ))}
-      </ul>
+      <ul>{searchResults?.map((recipe) => <li key={recipe._id}></li>)}</ul>
     </div>
   );
 }
