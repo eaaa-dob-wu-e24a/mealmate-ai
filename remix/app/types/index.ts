@@ -24,3 +24,24 @@ export type UserType = {
   updatedAt: string;
   __v: number;
 };
+
+export type Recipe = {
+  _id: string;
+  title: string;
+  image: string;
+  categories: string[];
+  preparation: {
+    total_time: string;
+    prep_time: string;
+    cook_time: string;
+  };
+  ingredients: {
+    name: string;
+    quantity: {
+      amount: number;
+      unit: string;
+    };
+  }[];
+  instructions: string[];
+  servings: number;
+};

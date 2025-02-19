@@ -2,11 +2,7 @@ import { useLoaderData } from "react-router";
 import RecipeLayout from "~/components/RecipeLayout";
 import { getSession } from "~/lib/auth.server";
 import type { Route } from "./+types/profile";
-type Recipe = {
-  title: string;
-  image: string;
-  categories: string[];
-};
+import type { Recipe } from "~/types";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request);
