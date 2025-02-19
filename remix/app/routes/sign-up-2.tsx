@@ -4,6 +4,7 @@ import {
   Form,
   redirect,
   useNavigate,
+  useSearchParams,
   type ActionFunctionArgs,
 } from "react-router";
 import { Button } from "~/components/ui/button";
@@ -13,10 +14,13 @@ import { Input } from "~/components/ui/input";
 import { BackButton } from "~/components/ui/back-button";
 import { ProgressDots } from "~/components/ui/progress-dots";
 import { setSession } from "~/lib/auth.server";
+import { useState } from "react";
 import { login, signUp } from "~/queries/auth";
 
 export default function SignUp2() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const error = searchParams.get("error");
 
   return (
     <div className="section-wrapper max-w-[500px] mx-auto min-h-[calc(100svh-66px)] flex flex-col justify-between">
@@ -35,9 +39,25 @@ export default function SignUp2() {
         </ChatBubble>
       </div>
       <Form className="w-full space-y-4 mt-4" method="post">
-        <Input type="text" name="username" placeholder="Username" />
-        <Input type="email" name="email" placeholder="Email" />
-        <Input type="password" name="password" placeholder="Password" />
+        {error && <p className="text-red-500">{error}</p>}
+        <Input
+          type="text"
+          name="username"
+          placeholder="Username"
+          className={`${error?.includes("username") ? "border-red-500 focus:border-red-500" : ""}`}
+        />
+        <Input
+          type="email"
+          name="email"
+          placeholder="Email"
+          className={`${error?.includes("email") ? "border-red-500 focus:border-red-500" : ""}`}
+        />
+        <Input
+          type="password"
+          name="password"
+          placeholder="Password"
+          className={`${error?.includes("password") ? "border-red-500 focus:border-red-500" : ""}`}
+        />
         <Button className="w-full" type="submit">
           Sign Up
         </Button>

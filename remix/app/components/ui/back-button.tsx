@@ -7,10 +7,7 @@ interface BackButtonProps {
 
 export function BackButton({ onBack, className = "" }: BackButtonProps) {
   return (
-    <button
-      className="text-sm absolute bottom-0 left-5 text-gray-500 underline"
-      onClick={onBack}
-    >
+    <button className="text-sm  text-gray-500 underline" onClick={onBack}>
       Back
     </button>
   );
